@@ -1,0 +1,32 @@
+[gd_scene load_steps=7 format=3 uid="uid://bl761lma55me4"]
+
+[ext_resource type="PackedScene" uid="uid://01e4tgm52oaq" path="res://Player.tscn" id="1_glv2v"]
+[ext_resource type="Texture2D" uid="uid://drdbr8u1vqeqj" path="res://AllSkyFree_Sky_ClearBlueSky_Equirect.png" id="2_uu6xs"]
+[ext_resource type="PackedScene" uid="uid://ccwwk6emy8rkq" path="res://Terrain/Terrain(Mesh).glb" id="3_r0du0"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_r0du0"]
+panorama = ExtResource("2_uu6xs")
+
+[sub_resource type="Sky" id="Sky_uu6xs"]
+sky_material = SubResource("PanoramaSkyMaterial_r0du0")
+
+[sub_resource type="Environment" id="Environment_fos0i"]
+background_mode = 2
+sky = SubResource("Sky_uu6xs")
+
+[node name="World" type="Node3D"]
+
+[node name="Player" parent="." instance=ExtResource("1_glv2v")]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -221.666, 97.9636, 264.709)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.897158, 0.441709, 0, -0.441709, 0.897158, 0, 4.47962, 5.67882)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.685196, 0.728359, 0, -0.728359, 0.685196, 0.0560395, 4.36332, 2.44448)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_fos0i")
+
+[node name="Main" parent="." instance=ExtResource("3_r0du0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75.0681, 51.7721, -0.0278049)
