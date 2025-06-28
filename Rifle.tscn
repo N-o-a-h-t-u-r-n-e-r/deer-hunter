@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://cljb0m4juhryn"]
+
+[ext_resource type="PackedScene" uid="uid://c0f316a0cl0ot" path="res://Rifle.glb" id="1_36w3d"]
+
+[node name="Rifle2" instance=ExtResource("1_36w3d")]

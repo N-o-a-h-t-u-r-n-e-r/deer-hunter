@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dgpiw8taxn5mi"]
+
+[ext_resource type="PackedScene" uid="uid://c0f316a0cl0ot" path="res://Rifle.glb" id="1_8g2qn"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Rifle2" parent="." instance=ExtResource("1_8g2qn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.351526, 0, 2.27813)
