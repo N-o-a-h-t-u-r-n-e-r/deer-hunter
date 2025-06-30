@@ -2,8 +2,8 @@ extends CharacterBody3D
 
 #Exports
 @export var speed = 5.0
-@export var sensetivity = 0.1
-
+@export var sensetivity = 0.05
+@export var aim_sensetivity = 0.1
 #Constants
 const JUMP_VELOCITY = 4.5
 const FRICTION = 1.0
@@ -44,11 +44,13 @@ func _input(event: InputEvent) -> void:
 	if(event is InputEventMouseMotion):
 		
 		#get the mouse x movement and rotate around the player's y axis (Horizontal Movement)
-		rotate_y(deg_to_rad(-event.relative.x * sensetivity))
+		rotate_y(deg_to_rad(-event.relative.x * aim_sensetivity))
 		
 		#calculate the vertical rotation by subtracting the current rotation from the relative y mouse movement
-		vertical_rotation = clamp(vertical_rotation - event.relative.y * sensetivity, -90, 90)
+		vertical_rotation = clamp(vertical_rotation - event.relative.y * aim_sensetivity, -90, 90)
 		$CameraPivot.rotation_degrees.x = vertical_rotation
+		
+		
 		
 		
 func _unhandled_input(event: InputEvent) -> void:
