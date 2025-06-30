@@ -1,10 +1,9 @@
-[gd_scene load_steps=21 format=4 uid="uid://c5imdwx5ptmu2"]
+[gd_scene load_steps=20 format=4 uid="uid://c5imdwx5ptmu2"]
 
 [ext_resource type="Script" uid="uid://cjjbb142p83bu" path="res://rifle.gd" id="2_gkrl1"]
 [ext_resource type="Texture2D" uid="uid://bl7pfdiwgk6fr" path="res://Rifle_rifle2.png" id="2_orkfg"]
 [ext_resource type="ArrayMesh" uid="uid://dy8ou4gon02t" path="res://scope.res" id="3_ixnti"]
 [ext_resource type="Shader" uid="uid://my5i6qixni1e" path="res://Scope.gdshader" id="3_q4vfd"]
-[ext_resource type="PackedScene" uid="uid://ccwwk6emy8rkq" path="res://Terrain/Terrain(Mesh).glb" id="4_q4vfd"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a1uc4"]
 resource_name = "Body"
@@ -170,7 +169,15 @@ resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("3_q4vfd")
 shader_parameter/texture_albedo = SubResource("ViewportTexture_q4vfd")
-shader_parameter/falloff = 1.05
+shader_parameter/buldge = 1.1
+shader_parameter/zoom = 0.895
+shader_parameter/vin_color = Color(0, 0, 0, 0.388235)
+shader_parameter/crosshair_color = Color(0, 0, 0, 1)
+shader_parameter/crosshair_size = 0.003
+shader_parameter/vignette_fade = 2.915
+shader_parameter/vignette_radius = 5.535
+shader_parameter/metallic = 0.2
+shader_parameter/roughness = 0.2
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_2xr6h"]
 _surfaces = [{
@@ -273,7 +280,7 @@ transform = Transform3D(1.00013, 0, 0, 0, 1, 0, 0, 0, 1.00013, 0, 0, 0)
 remote_path = NodePath("../SubViewport/CamContainer")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(-3.0598e-09, -0.07, 0, 0.07, -3.0598e-09, 0, 0, 0, 0.07, -0.496693, -0.00343246, -0.248292)
+transform = Transform3D(-3.0598e-09, -0.07, 0, 0.07, -3.0598e-09, 0, 0, 0, 0.07, -0.53, -0.00730858, 0)
 mesh = ExtResource("3_ixnti")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("ShaderMaterial_q4vfd")
@@ -282,6 +289,3 @@ surface_material_override/0 = SubResource("ShaderMaterial_q4vfd")
 transform = Transform3D(0.00158487, 0.565718, 0, -0.140567, 0.0063784, 0, 0, 0, 0.140576, 0, 0, 0)
 mesh = SubResource("ArrayMesh_v3ea4")
 skeleton = NodePath("")
-
-[node name="Main" parent="." instance=ExtResource("4_q4vfd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -20.2325, 0)
