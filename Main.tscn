@@ -1,5 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://bl761lma55me4"]
+[gd_scene load_steps=9 format=3 uid="uid://bl761lma55me4"]
 
+[ext_resource type="Texture2D" uid="uid://fmwgyttmntj8" path="res://Terrain/crosshair001.png" id="1_fos0i"]
 [ext_resource type="PackedScene" uid="uid://01e4tgm52oaq" path="res://Player.tscn" id="1_glv2v"]
 [ext_resource type="PackedScene" uid="uid://c5imdwx5ptmu2" path="res://Rifle.tscn" id="2_cm0pq"]
 [ext_resource type="Shader" uid="uid://my5i6qixni1e" path="res://Scope.gdshader" id="3_cm0pq"]
@@ -28,28 +29,59 @@ background_energy_multiplier = 8.1
 
 [node name="World" type="Node3D"]
 
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -132.5
+offset_top = -99.0
+offset_right = 132.5
+offset_bottom = 99.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="TextureRect" type="TextureRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_fos0i")
+
 [node name="Player" parent="." instance=ExtResource("1_glv2v")]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 17.7973, 0)
 
-[node name="CameraPivot" parent="Player" index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-
 [node name="Rifle" parent="Player/CameraPivot" index="0" node_paths=PackedStringArray("cam") instance=ExtResource("2_cm0pq")]
-transform = Transform3D(0.0701655, -0.0447032, 0.996532, 0.0288939, 0.998666, 0.0427646, -0.997116, 0.0257931, 0.0713637, 0.92606, 0.108669, -1.32645)
+transform = Transform3D(-4.37114e-08, 0, 0.999999, 0, 0.999999, 0, -0.999999, 0, -4.37114e-08, 0.984112, 0.0553818, -1.39155)
 cam = NodePath("..")
-x_offset = 0.85
-y_offset = 0.25
-z_offset = 0.5
+x_offset = 0.983
+y_offset = 0.35
+z_offset = 0.6
 sway_speed = 0.03
+cam_sway = 100.0
 
 [node name="CamContainer" parent="Player/CameraPivot/Rifle/SubViewport" index="0"]
-transform = Transform3D(0.0210524, -0.013411, 0.298999, 0.00866929, 0.2996, 0.012831, -0.299174, 0.00773793, 0.0214119, 0.277818, 17.8299, -0.397935)
+transform = Transform3D(-1.31151e-08, 0, 0.300039, 0, 0.3, 0, -0.300039, 0, -1.31151e-08, 0.295234, 17.8139, -0.417465)
 
 [node name="ADSCamera" parent="Player/CameraPivot/Rifle/SubViewport/CamContainer" index="0"]
-transform = Transform3D(0.113758, -8.94422e-09, -3.33096, -1.49012e-08, 3.33334, 1.02445e-08, 3.33096, -2.69241e-07, 0.113758, 0.288675, 0.00987625, 0.0253201)
+transform = Transform3D(-1.45686e-07, 0, -3.3329, 0, 3.33334, 0, 3.3329, 0, -1.45686e-07, 0.549376, 0.00987625, 0)
+fov = 8.0
 near = 0.001
 
 [node name="MeshInstance3D" parent="Player/CameraPivot/Rifle" index="6"]
+transform = Transform3D(-3.0598e-09, -0.07, 0, 0.069976, -3.05875e-09, 0.00183239, -0.00183239, 8.00962e-11, 0.069976, -0.53, -0.00730858, 0)
 surface_material_override/0 = SubResource("ShaderMaterial_fos0i")
 
 [node name="Camera3D" parent="Player/CameraPivot" index="1"]

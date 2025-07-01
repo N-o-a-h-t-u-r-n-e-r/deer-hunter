@@ -1,18 +1,26 @@
 extends Node3D
 
 @export var cam : Node3D
+@export var player : Node3D
 @export var x_offset := 0.35
 @export var y_offset := 0.4
 @export var z_offset := 0.1
 @export var ads_speed := 1.0
 @export var sway_speed := 0.01
-@export var weapon_swway := 30.0
+@export var weapon_sway := 30.0
+@export var weapon_sway_speed := 5.0
+@export var cam_sway := 50.0
+@export var ads_offset := -0.35
 
 var aim_pos
 var hip_pos
 var rot
 var prev_rot
 var sway = 0.0
+var ads_cam
+var ads_cam_rot
+var cam_offset
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -20,6 +28,10 @@ func _ready() -> void:
 	hip_pos = position
 	rot = rotation
 	prev_rot = cam.global_transform.basis.get_euler()
+	ads_cam = get_node("SubViewport/CamContainer/ADSCamera") as Camera3D
+	ads_cam_rot = ads_cam.rotation
+	
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -31,12 +43,19 @@ func _process(delta: float) -> void:
 	var offset_rotation = cam_rotation 
 	prev_rot = cam.global_transform.basis.get_euler()
 	
+	
 	if(Input.is_action_pressed("ads")):
-		position = position.move_toward(aim_pos, ads_speed * delta)		
-
+		position = position.move_toward(aim_pos, ads_speed * delta)	
+		cam_offset = ads_cam_rot.y
+			
 	else:
 		position = position.move_toward(offset_hip_pos, ads_speed * delta)
+		cam_offset = ads_cam_rot.y - ads_offset
 
-	rotation.y = lerp_angle(rotation.y, -offset_rotation.y * weapon_swway + rot.y, 0.005)
+
+	rotation.y = lerp_angle(rotation.y, -offset_rotation.y * weapon_sway + rot.y, weapon_sway_speed * delta)
 	#For some reason the x axis of the camera pivot is this nodes z axis?
-	rotation.z = lerp_angle(rotation.z, -offset_rotation.x * weapon_swway*5 + rot.x, 0.005)
+	rotation.z = lerp_angle(rotation.z, -offset_rotation.x * weapon_sway * 5.0 + rot.x, weapon_sway_speed * delta )
+	
+	ads_cam.rotation.y = lerp_angle(ads_cam.rotation.y, -offset_rotation.y * cam_sway + cam_offset, ads_speed * 2.0 * delta)
+	ads_cam.rotation.x = lerp_angle(ads_cam.rotation.x, -offset_rotation.x * cam_sway * 5.0 + ads_cam_rot.x , ads_speed * 2.0 * delta)
