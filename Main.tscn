@@ -300,11 +300,12 @@ sway_speed = 0.03
 cam_sway = 100.0
 crosshair = NodePath("../../../Control")
 coll_ray = NodePath("../CollDet")
+recoil = 50.0
 
 [node name="SubViewport" type="SubViewport" parent="Player/CameraPivot/Rifle"]
 
 [node name="CamContainer" type="Node3D" parent="Player/CameraPivot/Rifle/SubViewport"]
-transform = Transform3D(-6.55756e-09, 0, 0.150019, 0, 0.15, 0, -0.150019, 0, -6.55756e-09, 0.192652, 28.7984, 8.49561)
+transform = Transform3D(-6.55756e-09, 0, 0.15002, 0, 0.15, 0, -0.15002, 0, -6.55756e-09, 0.192652, 28.7984, 8.49561)
 
 [node name="ADSCamera" type="Camera3D" parent="Player/CameraPivot/Rifle/SubViewport/CamContainer"]
 transform = Transform3D(-1.45686e-07, 0, -3.3329, 0, 3.33334, 0, 3.3329, 0, -1.45686e-07, 0.549376, 0.00987625, 0)

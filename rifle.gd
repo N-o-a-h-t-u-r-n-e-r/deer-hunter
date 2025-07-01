@@ -12,6 +12,7 @@ extends Node3D
 @export var ads_offset := -0.35
 @export var crosshair: Control
 @export var coll_ray : RayCast3D
+@export var recoil = 1.5
 var aim_pos
 var hip_pos
 var rot
@@ -46,6 +47,9 @@ func _process(delta: float) -> void:
 	if(coll_ray.is_colliding()):
 		offset_rotation.x = -(rot.z + 1.0 * 85.0)
 
+	if(Input.is_action_just_pressed("shoot")):
+		rotation.z = -(rot.z + 1.0 * recoil)
+		position.z = -(position.z + 1.0)
 	
 	if(Input.is_action_pressed("ads")):
 		crosshair.visible = false
@@ -64,3 +68,5 @@ func _process(delta: float) -> void:
 	
 	ads_cam.rotation.y = lerp_angle(ads_cam.rotation.y, -offset_rotation.y * cam_sway + cam_offset, ads_speed * 2.0 * delta)
 	ads_cam.rotation.x = lerp_angle(ads_cam.rotation.x, -offset_rotation.x * cam_sway * 5.0 + ads_cam_rot.x , ads_speed * 2.0 * delta)
+
+	
