@@ -1,7 +1,6 @@
 extends Node3D
 
 @export var cam : Node3D
-@export var player : Node3D
 @export var x_offset := 0.35
 @export var y_offset := 0.4
 @export var z_offset := 0.1
@@ -11,7 +10,8 @@ extends Node3D
 @export var weapon_sway_speed := 5.0
 @export var cam_sway := 50.0
 @export var ads_offset := -0.35
-
+@export var crosshair: Control
+@export var coll_ray : RayCast3D
 var aim_pos
 var hip_pos
 var rot
@@ -30,7 +30,7 @@ func _ready() -> void:
 	prev_rot = cam.global_transform.basis.get_euler()
 	ads_cam = get_node("SubViewport/CamContainer/ADSCamera") as Camera3D
 	ads_cam_rot = ads_cam.rotation
-	
+
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -43,12 +43,17 @@ func _process(delta: float) -> void:
 	var offset_rotation = cam_rotation 
 	prev_rot = cam.global_transform.basis.get_euler()
 	
+	if(coll_ray.is_colliding()):
+		offset_rotation.x = -(rot.z + 1.0 * 85.0)
+
 	
 	if(Input.is_action_pressed("ads")):
+		crosshair.visible = false
 		position = position.move_toward(aim_pos, ads_speed * delta)	
 		cam_offset = ads_cam_rot.y
 			
 	else:
+		crosshair.visible = true
 		position = position.move_toward(offset_hip_pos, ads_speed * delta)
 		cam_offset = ads_cam_rot.y - ads_offset
 
