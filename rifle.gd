@@ -24,9 +24,11 @@ var ads_cam
 var ads_cam_rot
 var cam_offset
 var reloading = false
+var bolting = false
 var cooldown
 var bullet
 var bullet_pos
+var bullet_rot
 
 
 func _ready() -> void:
@@ -39,20 +41,32 @@ func _ready() -> void:
 	cooldown = rate_of_fire
 	bullet = $Bullet as MeshInstance3D
 	bullet_pos = bullet.position
-	
-	
+	bullet_rot = bullet.rotation
+
 func _process(delta: float) -> void:
 	
-	if(reloading):
-		cooldown -= delta	
-	
-	if(cooldown <= 0.0):
-		
-		cooldown = rate_of_fire
-		reloading = false
-		
 	#set a variable that always increases for the sin function
 	sway += delta
+	
+	if(reloading or bolting):
+		cooldown -= delta	
+	
+	if((cooldown <= rate_of_fire * 0.3) and bolting):
+		if(!$RifleBolt.playing):
+			$RifleBolt.play()
+			
+	if((cooldown <= rate_of_fire * 0.2) and bolting):
+		
+		bullet.position = bullet.position.move_toward(bullet_pos + -(Vector3(0.0, sin(-cooldown/2.0) + 1.0, 3.0)), delta * 5.0)
+		bullet.rotation = bullet.rotation.move_toward(bullet_rot + -(Vector3(10.0, 10.0, 10.0)), delta * 20.0)
+		
+	if(cooldown <= 0.0):
+		bullet.position = bullet_pos
+		bullet.rotation = bullet_rot
+		cooldown = rate_of_fire
+		reloading = false
+		bolting = false
+	
 	var offset_hip_pos = hip_pos + Vector3(sin(sway - 0.5) * (hip_sway_speed), sin(sway) * hip_sway_speed, 0.0)
 	
 	#get camera pivot rotation for weapon swaying
@@ -64,7 +78,7 @@ func _process(delta: float) -> void:
 		offset_rotation.x = -(rot.z + 1.0 * 85.0)
 		position.z = move_toward(position.z, hip_pos.z + 0.2, weapon_sway_speed * delta)
 	
-	if(reloading and cooldown <= rate_of_fire * 0.75):
+	if(bolting and cooldown <= rate_of_fire * 0.75):
 		move_to_base(offset_hip_pos, delta)
 
 	else:
@@ -77,29 +91,40 @@ func _process(delta: float) -> void:
 			#Handle shooting input, only called if player is ads
 			if(Input.is_action_just_pressed("shoot")):	
 				#Little check to make sure rifle cant shoot many times in a row
-				if(reloading):
-					print('reloading')
+				if(bolting):
+					print('bolting')
 				else:
-					rotation.z = (rotation.z + 1.0) * 0.1 * recoil
-					position.z = -((position.z + position.z) + 1.0 * recoil)
-					var hit_range = $HitRange
-					if((hit_range.is_colliding())):
-						print('HIT')
-					reloading = true
-			
+					shoot()
+		
 		else:
 			move_to_base(offset_hip_pos, delta)
 
+	rifle_sway(offset_rotation, delta)
+			
+			
+			
+#logic for setting rifle to default position
+func move_to_base(offset_hip_pos, delta):
+	crosshair.visible = true
+	position = position.move_toward(offset_hip_pos, ads_speed * delta)
+	cam_offset = ads_cam_rot.y - ads_offset
 
+
+#Moves the rifle when shot
+func shoot():
+	rotation.z = (rotation.z + 1.0) * 0.1 * recoil
+	position.z = -((position.z + position.z) + 1.0 * recoil)
+	var hit_range = $HitRange
+	if((hit_range.is_colliding())):
+		print('HIT')
+		$RifleShoot.play()
+		bolting = true
+		
+		
+func rifle_sway(offset_rotation, delta):
 	rotation.y = lerp_angle(rotation.y, -offset_rotation.y * weapon_sway + rot.y, weapon_sway_speed * delta)
 	#For some reason the x axis of the camera pivot is this nodes z axis?
 	rotation.z = lerp_angle(rotation.z, -offset_rotation.x * weapon_sway * 5.0 + rot.x, weapon_sway_speed * delta )
 	
 	ads_cam.rotation.y = lerp_angle(ads_cam.rotation.y, -offset_rotation.y * cam_sway + cam_offset, ads_speed * 2.0 * delta)
 	ads_cam.rotation.x = lerp_angle(ads_cam.rotation.x, -offset_rotation.x * cam_sway * 5.0 + ads_cam_rot.x , ads_speed * 2.0 * delta)
-
-#logic for setting rifle to default position
-func move_to_base(offset_hip_pos, delta):
-	crosshair.visible = true
-	position = position.move_toward(offset_hip_pos, ads_speed * delta)
-	cam_offset = ads_cam_rot.y - ads_offset

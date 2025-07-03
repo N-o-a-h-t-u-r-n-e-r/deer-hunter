@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=4 uid="uid://bl761lma55me4"]
+[gd_scene load_steps=27 format=4 uid="uid://bl761lma55me4"]
 
 [ext_resource type="Texture2D" uid="uid://fmwgyttmntj8" path="res://Terrain/crosshair001.png" id="1_fos0i"]
 [ext_resource type="PackedScene" uid="uid://01e4tgm52oaq" path="res://Player.tscn" id="1_glv2v"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://ccwwk6emy8rkq" path="res://Terrain/Terrain(Mesh).glb" id="3_r0du0"]
 [ext_resource type="Texture2D" uid="uid://bl7pfdiwgk6fr" path="res://Rifle_rifle2.png" id="4_trn2v"]
 [ext_resource type="ArrayMesh" uid="uid://dy8ou4gon02t" path="res://scope.res" id="5_03owx"]
+[ext_resource type="AudioStream" uid="uid://bgaxqgeixh7xc" path="res://Sounds/084147_lever-action-rifle-39835.mp3" id="7_trn2v"]
+[ext_resource type="AudioStream" uid="uid://bw40yq5gt5vpi" path="res://Sounds/enfieldrifle-100832.mp3" id="8_03owx"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a1uc4"]
 resource_name = "Body"
@@ -164,6 +166,12 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_dtoqt")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lgr22"]
+albedo_color = Color(0.994373, 0.874513, 0.586434, 1)
+metallic = 0.9
+metallic_specular = 1.0
+roughness = 0.68
+
 [sub_resource type="ViewportTexture" id="ViewportTexture_wkp8b"]
 viewport_path = NodePath("Player/CameraPivot/Rifle/SubViewport")
 
@@ -303,7 +311,7 @@ coll_ray = NodePath("../CollDet")
 [node name="SubViewport" type="SubViewport" parent="Player/CameraPivot/Rifle"]
 
 [node name="CamContainer" type="Node3D" parent="Player/CameraPivot/Rifle/SubViewport"]
-transform = Transform3D(-6.55756e-09, 0, 0.150019, 0, 0.15, 0, -0.150019, 0, -6.55756e-09, 0.192652, 28.7984, 8.49561)
+transform = Transform3D(-6.55756e-09, 0, 0.15002, 0, 0.15, 0, -0.15002, 0, -6.55756e-09, 0.192652, 28.7984, 8.49561)
 
 [node name="ADSCamera" type="Camera3D" parent="Player/CameraPivot/Rifle/SubViewport/CamContainer"]
 transform = Transform3D(-1.45686e-07, 0, -3.3329, 0, 3.33334, 0, 3.3329, 0, -1.45686e-07, 0.549376, 0.00987625, 0)
@@ -329,9 +337,10 @@ mesh = SubResource("ArrayMesh_d13rm")
 skeleton = NodePath("")
 
 [node name="Bullet" type="MeshInstance3D" parent="Player/CameraPivot/Rifle"]
-transform = Transform3D(-7.34351e-09, 0.168, 1.19904e-14, -0.168, -7.34351e-09, 0, 5.55865e-22, -1.19904e-14, 0.168, 0.966728, -0.379715, 0.00100541)
+transform = Transform3D(-1.5299e-09, 0.035, 1.55431e-15, -0.035, -1.5299e-09, 4.20739e-23, 1.12497e-22, -1.55431e-15, 0.035, 0.0783844, -0.367142, 0)
 mesh = SubResource("ArrayMesh_nb02y")
 skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_lgr22")
 
 [node name="RemoteTransform3D" type="RemoteTransform3D" parent="Player/CameraPivot/Rifle"]
 transform = Transform3D(1.00013, 0, 0, 0, 1, 0, 0, 0, 1.00013, 0, 0, 0)
@@ -351,6 +360,14 @@ skeleton = NodePath("")
 [node name="HitRange" type="RayCast3D" parent="Player/CameraPivot/Rifle"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
 target_position = Vector3(0, -2000, 0)
+
+[node name="RifleBolt" type="AudioStreamPlayer3D" parent="Player/CameraPivot/Rifle"]
+transform = Transform3D(6.66667, 0, -2.84217e-14, 0, 6.66667, 0, 2.84217e-14, 0, 6.66667, 0, -0.435623, 0)
+stream = ExtResource("7_trn2v")
+volume_db = -5.0
+
+[node name="RifleShoot" type="AudioStreamPlayer3D" parent="Player/CameraPivot/Rifle"]
+stream = ExtResource("8_03owx")
 
 [node name="Camera3D" parent="Player/CameraPivot" index="2"]
 transform = Transform3D(3.33333, 0, 0, 0, 3.33333, 0, 0, 0, 3.33333, 0, 0.358475, 0)
