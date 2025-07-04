@@ -28,13 +28,18 @@ var cooldown
 var bullet
 var bullet_pos
 var bullet_rot
+var mouse_delta := Vector2.ZERO
 
 
+func _unhandled_input(event):
+	if event is InputEventMouseMotion:
+		mouse_delta = event.relative
+	
 func _ready() -> void:
 	aim_pos = position + Vector3(-x_offset, y_offset, z_offset)
 	hip_pos = position
 	rot = rotation
-	prev_rot = cam.global_transform.basis.get_euler()
+	prev_rot = cam.global_transform.basis.get_rotation_quaternion().normalized()
 	ads_cam = get_node("SubViewport/CamContainer/ADSCamera") as Camera3D
 	ads_cam_rot = ads_cam.rotation
 	cooldown = rate_of_fire
@@ -72,11 +77,12 @@ func _process(delta: float) -> void:
 	
 	var offset_hip_pos = hip_pos + Vector3(sin(sway - 0.5) * (hip_sway_speed), sin(sway) * hip_sway_speed, 0.0)
 	
-	#get camera pivot rotation for weapon swaying
-	var cam_rotation = cam.global_transform.basis.get_euler() - prev_rot 
-	var offset_rotation = cam_rotation 
-	prev_rot = cam.global_transform.basis.get_euler()
-	
+	var offset_rotation = Vector3(
+		-deg_to_rad(mouse_delta.y),  # up/down
+		 deg_to_rad(mouse_delta.x),  # left/right
+		 0
+	)
+
 	if(coll_ray.is_colliding()):
 		offset_rotation.x = -(rot.z + 1.0 * 85.0)
 		position.z = move_toward(position.z, hip_pos.z + 0.2, weapon_sway_speed * delta)
@@ -86,7 +92,7 @@ func _process(delta: float) -> void:
 
 	else:
 		#Set crosshair not visisble and move rifle to aim position
-		if(Input.is_action_pressed("ads")):
+		if(Input.is_action_pressed("ads") and !reloading):
 			crosshair.visible = false
 			position = position.move_toward(aim_pos, ads_speed * delta)	
 			cam_offset = ads_cam_rot.y
@@ -107,7 +113,7 @@ func _process(delta: float) -> void:
 			move_to_base(offset_hip_pos, delta)
 
 	rifle_sway(offset_rotation, delta)
-			
+	mouse_delta = Vector2.ZERO		
 			
 			
 #logic for setting rifle to default position
@@ -130,9 +136,9 @@ func shoot():
 		
 		
 func rifle_sway(offset_rotation, delta):
-	rotation.y = lerp_angle(rotation.y, -offset_rotation.y * weapon_sway + rot.y, weapon_sway_speed * delta)
-	#For some reason the x axis of the camera pivot is this nodes z axis?
-	rotation.z = lerp_angle(rotation.z, -offset_rotation.x * weapon_sway * 5.0 + rot.x, weapon_sway_speed * delta )
-	
-	ads_cam.rotation.y = lerp_angle(ads_cam.rotation.y, -offset_rotation.y * cam_sway + cam_offset, ads_speed * 2.0 * delta)
-	ads_cam.rotation.x = lerp_angle(ads_cam.rotation.x, -offset_rotation.x * cam_sway * 5.0 + ads_cam_rot.x , ads_speed * 2.0 * delta)
+	rotation.y = lerp_angle(rotation.y, rot.y + offset_rotation.y * weapon_sway, weapon_sway_speed * delta)
+	rotation.z = lerp_angle(rotation.z, rot.x + -offset_rotation.x * weapon_sway, weapon_sway_speed * delta)
+
+
+	ads_cam.rotation.y = lerp_angle(ads_cam.rotation.y, -offset_rotation.y * cam_sway + cam_offset, weapon_sway_speed * delta)
+	ads_cam.rotation.x = lerp_angle(ads_cam.rotation.x, -offset_rotation.x * cam_sway + ads_cam_rot.x , weapon_sway_speed * delta)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=4 uid="uid://mm1oa5jeucs"]
+[gd_scene load_steps=24 format=4 uid="uid://mm1oa5jeucs"]
 
 [ext_resource type="Texture2D" uid="uid://fmwgyttmntj8" path="res://Terrain/crosshair001.png" id="1_oy65j"]
 [ext_resource type="PackedScene" uid="uid://01e4tgm52oaq" path="res://Scenes/Player.tscn" id="2_pxdyo"]
@@ -9,8 +9,6 @@
 [ext_resource type="AudioStream" uid="uid://bgaxqgeixh7xc" path="res://Sounds/084147_lever-action-rifle-39835.mp3" id="7_tlfsa"]
 [ext_resource type="AudioStream" uid="uid://dvescufdyxehr" path="res://Sounds/rifle_reload.mp3" id="8_ygig7"]
 [ext_resource type="AudioStream" uid="uid://bw40yq5gt5vpi" path="res://Sounds/enfieldrifle-100832.mp3" id="9_ab4qj"]
-[ext_resource type="PackedScene" uid="uid://ccwwk6emy8rkq" path="res://Terrain/Terrain(Mesh).glb" id="10_5ni33"]
-[ext_resource type="Shader" uid="uid://p2oau11a77xd" path="res://Shaders/post_processing.gdshader" id="10_pxdyo"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a1uc4"]
 resource_name = "Body"
@@ -180,15 +178,9 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_2xr6h")
 
-[sub_resource type="QuadMesh" id="QuadMesh_p33co"]
-flip_faces = true
+[sub_resource type="BoxMesh" id="BoxMesh_kc6nf"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_t431l"]
-render_priority = 0
-shader = ExtResource("10_pxdyo")
-
-[sub_resource type="Environment" id="Environment_r0du0"]
-background_energy_multiplier = 8.1
+[sub_resource type="BoxShape3D" id="BoxShape3D_kc6nf"]
 
 [node name="World" type="Node3D"]
 
@@ -207,6 +199,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 2
 
 [node name="TextureRect" type="TextureRect" parent="Control"]
 layout_mode = 1
@@ -224,7 +217,7 @@ grow_vertical = 2
 texture = ExtResource("1_oy65j")
 
 [node name="Player" parent="." instance=ExtResource("2_pxdyo")]
-transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 21.4028, 8.76023)
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 18.5493, 8.76023)
 
 [node name="CollisionShape3D" parent="Player" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.346611, 0)
@@ -246,14 +239,15 @@ x_offset = 0.642
 y_offset = 0.405
 z_offset = 0.49
 ads_speed = 3.0
-cam_sway = 100.0
+weapon_sway = 1.5
+cam_sway = 1.5
 crosshair = NodePath("../../../Control")
 coll_ray = NodePath("../CollDet")
 
 [node name="SubViewport" type="SubViewport" parent="Player/CameraPivot/Rifle"]
 
 [node name="CamContainer" type="Node3D" parent="Player/CameraPivot/Rifle/SubViewport"]
-transform = Transform3D(-6.55756e-09, 0, 0.15002, 0, 0.15, 0, -0.15002, 0, -6.55756e-09, 0.192652, 21.3922, 8.49561)
+transform = Transform3D(-6.55756e-09, 0, 0.15002, 0, 0.15, 0, -0.15002, 0, -6.55756e-09, 0.192652, 18.5387, 8.49561)
 
 [node name="ADSCamera" type="Camera3D" parent="Player/CameraPivot/Rifle/SubViewport/CamContainer"]
 transform = Transform3D(-1.45686e-07, 0, -3.3329, 0, 3.33334, 0, 3.3329, 0, -1.45686e-07, 0.549376, 0.00987625, 0)
@@ -308,14 +302,16 @@ stream = ExtResource("9_ab4qj")
 transform = Transform3D(3.33333, 0, 0, 0, 3.33333, 0, 0, 0, 3.33333, 0, 0.358475, 0)
 current = true
 
-[node name="PostProcess" type="MeshInstance3D" parent="Player/CameraPivot/Camera3D" index="0"]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
-mesh = SubResource("QuadMesh_p33co")
-surface_material_override/0 = SubResource("ShaderMaterial_t431l")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(29.94, 0, 0, 0, 29.94, 0, 0, 0, 29.94, 0, 0, 0)
+mesh = SubResource("BoxMesh_kc6nf")
 
-[node name="Main" parent="." instance=ExtResource("10_5ni33")]
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_r0du0")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("BoxShape3D_kc6nf")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.490812, 0.871265, 0, -0.871265, 0.490812, 0, 23.9905, 0)
 
 [editable path="Player"]

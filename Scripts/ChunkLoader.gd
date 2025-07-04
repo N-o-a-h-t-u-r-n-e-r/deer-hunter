@@ -1,7 +1,7 @@
 @tool
 extends Node3D
 
-@export var global_size := 200
+@export var global_size : int
 @export var chunk_size : int
 @export var global_seed := 1
 @export var render_distance := 4
