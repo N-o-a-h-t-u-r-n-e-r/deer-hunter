@@ -15,6 +15,7 @@ var vertical_rotation = 0.0
 var cam : Camera3D
 var cam_pos
 var bob_timer = 0.0
+var step_timer = 0.0
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -36,6 +37,7 @@ func _physics_process(delta: float) -> void:
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:
 		bob_timer += bob_speed * delta
+		step_timer += bob_speed * delta
 		#Use move towrad to ease into movement
 		velocity.x = move_toward(velocity.x, direction.x * speed, FRICTION)
 		velocity.z = move_toward(velocity.z, direction.z * speed, FRICTION)
@@ -47,6 +49,13 @@ func _physics_process(delta: float) -> void:
 	
 	
 	cam.position.y = move_toward(cam.position.y, (sin(bob_timer) * bob_amount) + cam_pos.y, 1.0 * delta)
+	
+	print(step_timer)
+	if(step_timer >= 3.0):
+		$FootstepGrass.play()
+		step_timer = 0.0
+	
+	
 	move_and_slide()
 	
 	

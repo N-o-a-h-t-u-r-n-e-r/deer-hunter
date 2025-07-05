@@ -77,11 +77,9 @@ func _process(delta: float) -> void:
 	
 	var offset_hip_pos = hip_pos + Vector3(sin(sway - 0.5) * (hip_sway_speed), sin(sway) * hip_sway_speed, 0.0)
 	
-	var offset_rotation = Vector3(
-		-deg_to_rad(mouse_delta.y),  # up/down
-		 deg_to_rad(mouse_delta.x),  # left/right
-		 0
-	)
+	#Divide by delta because the mouse delta will be higher at lower frame rates. Multiply by 500.0 because delta is very small
+	var offset_rotation = Vector3(-deg_to_rad(mouse_delta.y), deg_to_rad(mouse_delta.x), 0) / (delta*500.0)
+	
 
 	if(coll_ray.is_colliding()):
 		offset_rotation.x = -(rot.z + 1.0 * 85.0)
@@ -112,9 +110,8 @@ func _process(delta: float) -> void:
 		else:
 			move_to_base(offset_hip_pos, delta)
 
-	rifle_sway(offset_rotation, delta)
-	mouse_delta = Vector2.ZERO		
-			
+	rifle_sway(offset_rotation, delta)	
+	mouse_delta = Vector2.ZERO	
 			
 #logic for setting rifle to default position
 func move_to_base(offset_hip_pos, delta):
