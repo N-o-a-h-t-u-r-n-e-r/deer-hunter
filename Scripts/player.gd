@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 #Exports
 @export var speed = 5.0
+@export var sprint_speed = 2.0
 @export var sensetivity = 0.05
 @export var aim_sensetivity = 0.1
 @export var bob_speed = 0.5
@@ -16,6 +17,7 @@ var cam : Camera3D
 var cam_pos
 var bob_timer = 0.0
 var step_timer = 0.0
+var curr_speed = speed
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -31,16 +33,21 @@ func _physics_process(delta: float) -> void:
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
+		
+	if Input.is_action_pressed("sprint"):
+		curr_speed = sprint_speed
+	else:
+		curr_speed = speed
 
 	# Get the input direction and handle the movement/deceleration.
 	var input_dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:
 		bob_timer += bob_speed * delta
-		step_timer += bob_speed * delta
+		step_timer += curr_speed*3 * delta
 		#Use move towrad to ease into movement
-		velocity.x = move_toward(velocity.x, direction.x * speed, FRICTION)
-		velocity.z = move_toward(velocity.z, direction.z * speed, FRICTION)
+		velocity.x = move_toward(velocity.x, direction.x * curr_speed, FRICTION)
+		velocity.z = move_toward(velocity.z, direction.z * curr_speed, FRICTION)
 	else:
 		bob_timer = 0.0
 		#Used to smoothly stop the player, the lower the delta, the slower the player will come to a stop
@@ -48,10 +55,11 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, FRICTION)
 	
 	
-	cam.position.y = move_toward(cam.position.y, (sin(bob_timer) * bob_amount) + cam_pos.y, 1.0 * delta)
+	cam.position.y = move_toward(cam.position.y, (sin(bob_timer) * bob_amount * curr_speed) + cam_pos.y, curr_speed * delta)
 	
-	print(step_timer)
+	
 	if(step_timer >= 3.0):
+		$FootstepGrass.pitch_scale = randf_range(0.8, 1.2)
 		$FootstepGrass.play()
 		step_timer = 0.0
 	

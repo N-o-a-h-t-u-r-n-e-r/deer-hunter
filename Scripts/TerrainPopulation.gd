@@ -50,7 +50,7 @@ func _ready() -> void:
 		if not result:
 			continue
 
-		if(result["collider"].collision_layer == 1):
+		if(result["collider"].collision_layer != 1):
 			continue
 			
 		var correction = Basis(Vector3.RIGHT, PI * 0.5)  

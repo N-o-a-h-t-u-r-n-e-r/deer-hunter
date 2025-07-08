@@ -120,13 +120,20 @@ func move_to_base(offset_hip_pos, delta):
 	cam_offset = ads_cam_rot.y - ads_offset
 
 
-#Moves the rifle when shot
+#Handles shooting logic for the rifle including rotation and raycasting
 func shoot():
 	rotation.z = (rotation.z + 1.0) * 0.1 * recoil
 	position.z = -((position.z + position.z) + 1.0 * recoil)
 	var hit_range = $HitRange
 	if((hit_range.is_colliding())):
-		print('HIT')
+		var collider = hit_range.get_collider()
+		if(collider.is_in_group("Animal")):
+			print("Hit")
+			var body = collider.get_node("Hitbox") as CollisionShape3D
+			body.disabled = true
+			collider.get_node("deer/Armature/Skeleton3D/AnimalBones").ragdoll()
+		
+		
 	if(!$RifleShoot.playing):
 		$RifleShoot.play()
 	bolting = true
