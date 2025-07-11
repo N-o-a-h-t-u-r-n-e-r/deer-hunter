@@ -16,10 +16,11 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity()*2 * delta
 
-	if(!hitbox.disabled):
-		#IMPORTANT: set the rotation before aligning with surface normal
-		look_at(global_position + velocity, Vector3.UP, true)
-		align_with_surface()
+	if(!hitbox.disabled):	
+		if(animal.state != animal.State.IDLE):
+			#IMPORTANT: set the rotation before aligning with surface normal
+			look_at(global_position + velocity, Vector3.UP, true)
+			align_with_surface()
 		
 		move_and_slide()
 	else:
@@ -45,5 +46,7 @@ func align_with_surface():
 	basis_new.z *= scale_base.z 
 	
 	global_basis = basis_new
-	
-	
+
+func _on_area_3d_body_entered(body: PhysicsBody3D) -> void:
+	if(body == player):
+		animal.change_state(animal.State.FLEE)

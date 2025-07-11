@@ -73,6 +73,7 @@ func _ready() -> void:
 			box.size = Vector3(0.1, 0.1, 1)
 			var coll = CollisionShape3D.new()
 			coll.shape = box
+			static_body.collision_layer = 3
 			static_body.add_child(coll)
 			var inst_xform = multimesh.get_instance_transform(i)
 			static_body.transform = inst_xform
