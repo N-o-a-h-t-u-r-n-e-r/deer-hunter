@@ -14,7 +14,7 @@ func _physics_process(delta: float) -> void:
 	
 	#Add the gravity.
 	if not is_on_floor():
-		velocity += get_gravity() * delta
+		velocity += get_gravity()*2 * delta
 
 	if(!hitbox.disabled):
 		#IMPORTANT: set the rotation before aligning with surface normal

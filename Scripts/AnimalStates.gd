@@ -2,6 +2,7 @@ extends Node3D
 
 enum State{IDLE, WALK, FLEE}
 var state 
+var timer: float
 
 @export var animal: CharacterBody3D
 @onready var navigation_agent: NavigationAgent3D = get_node("../NavigationAgent3D")
@@ -16,7 +17,9 @@ func _ready() -> void:
 	actor_setup.call_deferred()
 
 func _physics_process(delta: float) -> void:
-	#print("Poo")
+	
+	if(timer <= 0):
+		change_state(State.WALK)
 	
 	match state:
 		State.IDLE: _idle_state(delta)
@@ -25,15 +28,17 @@ func _physics_process(delta: float) -> void:
 	
 	if navigation_agent.is_navigation_finished():
 		change_state(State.IDLE)
+		timer -= delta
 		return
+	
+	
 		
-
-
 func change_state(s):
 	if(state == s):
 		return
 	if(s == State.WALK):
-		var movement_target_position = Vector3(global_position.x + randf_range(-20.0, 10.0), global_position.y, global_position.z + randf_range(-20.0, 10.0))
+		timer = 10.0
+		var movement_target_position = Vector3(global_position.x + randf_range(-10.0, 10.0), global_position.y, global_position.z + randf_range(-10.0, 10.0))
 		set_movement_target(movement_target_position)
 	state = s
 
