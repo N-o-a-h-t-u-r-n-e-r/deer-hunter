@@ -128,10 +128,11 @@ func shoot():
 	if((hit_range.is_colliding())):
 		var collider = hit_range.get_collider()
 		if(collider.is_in_group("Animal")):
-			print("Hit")
 			var body = collider.get_node("Hitbox") as CollisionShape3D
+			var animal = collider.get_node("deer")
 			body.disabled = true
-			collider.get_node("deer/Armature/Skeleton3D/AnimalBones").ragdoll()
+			animal.get_node("Armature/Skeleton3D/AnimalBones").ragdoll()
+			animal.change_state(animal.State.DEAD)
 		
 		
 	if(!$RifleShoot.playing):

@@ -17,7 +17,7 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity()*2 * delta
 
 	if(!hitbox.disabled):	
-		if(animal.state != animal.State.IDLE):
+		if(animal.state != animal.State.IDLE and velocity != Vector3.ZERO):
 			#IMPORTANT: set the rotation before aligning with surface normal
 			look_at(global_position + velocity, Vector3.UP, true)
 			align_with_surface()
@@ -48,5 +48,5 @@ func align_with_surface():
 	global_basis = basis_new
 
 func _on_area_3d_body_entered(body: PhysicsBody3D) -> void:
-	if(body == player):
+	if(body == player and animal.state != animal.State.DEAD):
 		animal.change_state(animal.State.FLEE)

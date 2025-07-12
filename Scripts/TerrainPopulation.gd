@@ -3,16 +3,14 @@ extends MultiMeshInstance3D
 
 @export var source_tree_path : NodePath
 @export var shader_material : ShaderMaterial
-@export var instance_count := 200
-@export var raycast_height := 100.0
-@export var max_scale := 1.0
-@export var min_scale := 1.0
-@export var collisions := false
-@export var seedy := 1
-
+@export var instance_count : int = 200
+@export var raycast_height : float = 100.0
+@export var max_scale : float = 1.0
+@export var min_scale : float = 1.0
+@export var collisions : bool = false
+@export var seedy : int = 1
 
 var chunk_size : int
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -50,7 +48,7 @@ func _ready() -> void:
 		if not result:
 			continue
 
-		if(result["collider"].collision_layer != 1):
+		if(result["collider"].collision_layer != 2):
 			continue
 			
 		var correction = Basis(Vector3.RIGHT, PI * 0.5)  
@@ -73,7 +71,6 @@ func _ready() -> void:
 			box.size = Vector3(0.1, 0.1, 1)
 			var coll = CollisionShape3D.new()
 			coll.shape = box
-			static_body.collision_layer = 3
 			static_body.add_child(coll)
 			var inst_xform = multimesh.get_instance_transform(i)
 			static_body.transform = inst_xform

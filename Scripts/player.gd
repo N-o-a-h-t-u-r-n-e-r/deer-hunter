@@ -7,22 +7,25 @@ extends CharacterBody3D
 @export var aim_sensetivity = 0.1
 @export var bob_speed = 0.5
 @export var bob_amount = 0.5
+@export var crouch_amount = 0.2
+
 #Constants
 const JUMP_VELOCITY = 4.5
 const FRICTION = 1.0
 
 #Global Variables
 var vertical_rotation = 0.0
-var cam : Camera3D
-var cam_pos
+@onready var cam : Camera3D = $CameraPivot/Camera3D
+@onready var cam_pos = cam.position
+@onready var stand_pos: Vector3 = $CameraPivot.position
 var bob_timer = 0.0
 var step_timer = 0.0
 var curr_speed = speed
 
+
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	cam = $CameraPivot/Camera3D
-	cam_pos = cam.position
+
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -38,6 +41,14 @@ func _physics_process(delta: float) -> void:
 		curr_speed = sprint_speed
 	else:
 		curr_speed = speed
+		
+	if Input.is_action_pressed("crouch"):
+		$CameraPivot.position.y = -crouch_amount
+		curr_speed = speed/2.0
+	else:
+		$CameraPivot.position.y = stand_pos.y
+		
+		
 
 	# Get the input direction and handle the movement/deceleration.
 	var input_dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -62,7 +73,6 @@ func _physics_process(delta: float) -> void:
 		$FootstepGrass.pitch_scale = randf_range(0.8, 1.2)
 		$FootstepGrass.play()
 		step_timer = 0.0
-	
 	
 	move_and_slide()
 	

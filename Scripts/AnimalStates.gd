@@ -1,6 +1,6 @@
 extends Node3D
 
-enum State{IDLE, WALK, FLEE}
+enum State{IDLE, WALK, FLEE, DEAD}
 var state 
 var timer: float
 
@@ -19,12 +19,13 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 
-	
-	
+
 	match state:
-		State.IDLE: _idle_state(delta)
-		State.WALK: _walk_state(delta)
-		State.FLEE: _flee_state(delta)
+		State.IDLE: _idle_state()
+		State.WALK: _walk_state()
+		State.FLEE: _flee_state()
+		State.DEAD: pass
+		
 	
 	if(timer <= 0):
 		change_state(State.WALK)
@@ -40,29 +41,36 @@ func change_state(s):
 		return
 	match s: 
 		State.WALK: 
-			set_movement_target(10.0)
+			set_movement_target(100.0)
+			animation_player.speed_scale = 1.5
 			animation_player.play("Walk")
 			
 		State.FLEE:
-			set_movement_target(10.0)
+			set_movement_target(500.0)
+			animation_player.speed_scale = 3.0
+			animation_player.play("Flee")
 			
 		State.IDLE:
+			animation_player.speed_scale = 1.2
 			animation_player.play("Idle")
 			
+		State.DEAD:
+			print("dead")
+			animation_player.stop(false)
 	
 	state = s
 
-func _idle_state(delta):
+func _idle_state():
 	animal.velocity = Vector3.ZERO
 	
-func _walk_state(delta):
+func _walk_state():
 
 	var current_animal_position: Vector3 = animal.global_position
 	var next_path_position: Vector3 = navigation_agent.get_next_path_position()
 
 	animal.velocity = current_animal_position.direction_to(next_path_position) * animal.walk_speed
 	
-func _flee_state(delta):
+func _flee_state():
 	
 	var current_animal_position: Vector3 = animal.global_position
 	var next_path_position: Vector3 = navigation_agent.get_next_path_position()
