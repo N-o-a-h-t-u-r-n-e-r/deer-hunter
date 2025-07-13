@@ -19,6 +19,11 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 
+	if navigation_agent.is_navigation_finished():
+		change_state(State.IDLE)
+		timer -= delta
+		return
+
 
 	match state:
 		State.IDLE: _idle_state()
@@ -30,10 +35,7 @@ func _physics_process(delta: float) -> void:
 	if(timer <= 0):
 		change_state(State.WALK)
 	
-	if navigation_agent.is_navigation_finished():
-		change_state(State.IDLE)
-		timer -= delta
-		return
+	
 		
 func change_state(s):
 	

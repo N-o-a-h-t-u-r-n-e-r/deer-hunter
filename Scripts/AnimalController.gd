@@ -18,9 +18,13 @@ func _physics_process(delta: float) -> void:
 
 	if(!hitbox.disabled):	
 		if(animal.state != animal.State.IDLE and velocity != Vector3.ZERO):
-			#IMPORTANT: set the rotation before aligning with surface normal
-			look_at(global_position + velocity, Vector3.UP, true)
-			align_with_surface()
+			
+			var flat_vel = velocity
+			flat_vel.y = 0
+			 	
+			if flat_vel.length() > 0.001:
+				look_at(global_position + velocity, Vector3.UP, true)
+				align_with_surface()
 		
 		move_and_slide()
 	else:

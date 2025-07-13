@@ -1,19 +1,22 @@
 extends Node3D
 
+
+@export var magazine_size : int = 6
+@export var total_ammo : int = 48
 @export var cam : Node3D
-@export var x_offset := 0.35
-@export var y_offset := 0.4
-@export var z_offset := 0.1
-@export var ads_speed := 1.0
-@export var hip_sway_speed := 0.01
-@export var weapon_sway := 30.0
-@export var weapon_sway_speed := 5.0
-@export var cam_sway := 50.0
-@export var ads_offset := -0.35
+@export var x_offset : float = 0.35
+@export var y_offset : float= 0.4
+@export var z_offset : float = 0.1
+@export var ads_speed : float = 1.0
+@export var hip_sway_speed : float= 0.01
+@export var weapon_sway : float = 30.0
+@export var weapon_sway_speed : float = 5.0
+@export var cam_sway : float = 50.0
+@export var ads_offset : float = -0.35
 @export var crosshair: Control
 @export var coll_ray : RayCast3D
-@export var recoil = 1.5
-@export var rate_of_fire = 3.0
+@export var recoil : float = 1.5
+@export var rate_of_fire: float = 3.0
 var aim_pos
 var hip_pos
 var rot
@@ -22,13 +25,14 @@ var sway = 0.0
 var ads_cam
 var ads_cam_rot
 var cam_offset
-var reloading = false
-var bolting = false
+var reloading : bool = false
+var bolting : bool = false
 var cooldown
 var bullet
 var bullet_pos
 var bullet_rot
 var mouse_delta := Vector2.ZERO
+var curr_ammo : int
 
 
 func _unhandled_input(event):
@@ -46,6 +50,9 @@ func _ready() -> void:
 	bullet = $Bullet as MeshInstance3D
 	bullet_pos = bullet.position
 	bullet_rot = bullet.rotation
+	curr_ammo = magazine_size
+	
+	update_GUI()
 
 func _process(delta: float) -> void:
 	
@@ -69,11 +76,17 @@ func _process(delta: float) -> void:
 		bullet.rotation = bullet.rotation.move_toward(bullet_rot + -(Vector3(10.0, 10.0, 10.0)), delta * 20.0)
 		
 	if(cooldown <= 0.0):
+		if(reloading == true):
+			total_ammo -= magazine_size - curr_ammo
+			curr_ammo = magazine_size
+			
 		bullet.position = bullet_pos
 		bullet.rotation = bullet_rot
 		cooldown = rate_of_fire
 		reloading = false
 		bolting = false
+		sway = 0
+		update_GUI()
 	
 	var offset_hip_pos = hip_pos + Vector3(sin(sway - 0.5) * (hip_sway_speed), sin(sway) * hip_sway_speed, 0.0)
 	
@@ -100,9 +113,12 @@ func _process(delta: float) -> void:
 				#Little check to make sure rifle cant shoot many times in a row
 				if(bolting):
 					print('bolting')
+				elif(curr_ammo == 0):
+					print('Mag empty')
 				else:
 					shoot()
-		elif(Input.is_action_just_pressed("reload") and !bolting and !reloading):
+					
+		elif(Input.is_action_just_pressed("reload") and !bolting and !reloading and curr_ammo != 6):
 			reloading = true
 			$RifleReload.play()
 			
@@ -122,6 +138,7 @@ func move_to_base(offset_hip_pos, delta):
 
 #Handles shooting logic for the rifle including rotation and raycasting
 func shoot():
+	
 	rotation.z = (rotation.z + 1.0) * 0.1 * recoil
 	position.z = -((position.z + position.z) + 1.0 * recoil)
 	var hit_range = $HitRange
@@ -134,7 +151,7 @@ func shoot():
 			animal.get_node("Armature/Skeleton3D/AnimalBones").ragdoll()
 			animal.change_state(animal.State.DEAD)
 		
-		
+	curr_ammo -= 1
 	if(!$RifleShoot.playing):
 		$RifleShoot.play()
 	bolting = true
@@ -147,3 +164,7 @@ func rifle_sway(offset_rotation, delta):
 
 	ads_cam.rotation.y = lerp_angle(ads_cam.rotation.y, -offset_rotation.y * cam_sway + cam_offset, weapon_sway_speed * delta)
 	ads_cam.rotation.x = lerp_angle(ads_cam.rotation.x, -offset_rotation.x * cam_sway + ads_cam_rot.x , weapon_sway_speed * delta)
+	
+	
+func update_GUI():
+	$AmmoDisplay.text = (str(curr_ammo) + " / " + str(total_ammo))

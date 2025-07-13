@@ -70,8 +70,8 @@ func _physics_process(delta: float) -> void:
 	
 	
 	if(step_timer >= 3.0):
-		$FootstepGrass.pitch_scale = randf_range(0.8, 1.2)
-		$FootstepGrass.play()
+		$CameraPivot/FootstepGrass.pitch_scale = randf_range(0.8, 1.2)
+		$CameraPivot/FootstepGrass.play()
 		step_timer = 0.0
 	
 	move_and_slide()
