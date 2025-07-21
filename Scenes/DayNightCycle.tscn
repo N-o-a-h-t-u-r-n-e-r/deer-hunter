@@ -1,0 +1,85 @@
+[gd_scene load_steps=13 format=3 uid="uid://clyx4jv2318tq"]
+
+[ext_resource type="Shader" uid="uid://di1q1c0bp34iq" path="res://Shaders/DayNightCycle.gdshader" id="1_icp1e"]
+[ext_resource type="PackedScene" uid="uid://ccwwk6emy8rkq" path="res://Terrain/Terrain(Mesh).glb" id="2_0ixtf"]
+[ext_resource type="PackedScene" uid="uid://cga3otcq1yx13" path="res://Scenes/FPSCharacter.tscn" id="2_6riic"]
+[ext_resource type="Script" uid="uid://bs1jxw3fy1qhh" path="res://Scenes/DayNightCycle.gd" id="2_nbbcb"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_nbbcb"]
+frequency = 0.0627
+fractal_lacunarity = 2.94
+fractal_gain = 0.935
+fractal_weighted_strength = 0.34
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_kvqn8"]
+width = 256
+height = 256
+in_3d_space = true
+generate_mipmaps = false
+seamless = true
+bump_strength = 7.1
+noise = SubResource("FastNoiseLite_nbbcb")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0ixtf"]
+shader = ExtResource("1_icp1e")
+shader_parameter/baseColor = Color(0.617269, 0.809245, 1, 1)
+shader_parameter/cloudColor = Color(0.925353, 0.925353, 0.925353, 1)
+shader_parameter/cloudNoise = SubResource("NoiseTexture2D_kvqn8")
+shader_parameter/noiseScale = Vector2(1, 1)
+shader_parameter/cloudThreshold = 0.52
+shader_parameter/cutoffUV = -0.24
+shader_parameter/fadeRange = 0.4
+
+[sub_resource type="Sky" id="Sky_6riic"]
+sky_material = SubResource("ShaderMaterial_0ixtf")
+
+[sub_resource type="Environment" id="Environment_nbbcb"]
+background_mode = 2
+sky = SubResource("Sky_6riic")
+
+[sub_resource type="Gradient" id="Gradient_nbbcb"]
+offsets = PackedFloat32Array(0, 0.303725, 0.618911, 1)
+colors = PackedColorArray(0.110571, 0.0531275, 0.311201, 1, 0.763481, 0.560534, 0.323057, 1, 0.437803, 0.616362, 1, 1, 0.617269, 0.809245, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_6riic"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_nbbcb"]
+
+[node name="DayNightCycle" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_nbbcb")
+script = ExtResource("2_nbbcb")
+grad = SubResource("Gradient_nbbcb")
+
+[node name="SunMoon" type="Node3D" parent="WorldEnvironment"]
+transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, 4.37114e-08, 1.91069e-15, 0, 0, 0)
+
+[node name="Sun" type="MeshInstance3D" parent="WorldEnvironment/SunMoon"]
+transform = Transform3D(1.3, 0, 0, 0, 1.3, 0, 0, 0, 1.3, 0, 0, 1)
+mesh = SubResource("SphereMesh_6riic")
+
+[node name="SunLight" type="DirectionalLight3D" parent="WorldEnvironment/SunMoon/Sun"]
+transform = Transform3D(1, 0, 0, 0, 1, -3.8743e-08, 0, 3.8743e-08, 1, 0, 0, 0)
+light_color = Color(0.996091, 1, 0.731566, 1)
+shadow_enabled = true
+shadow_blur = 0.1
+directional_shadow_mode = 0
+directional_shadow_fade_start = 1.0
+directional_shadow_max_distance = 15.0
+directional_shadow_pancake_size = 0.9
+
+[node name="Moon" type="MeshInstance3D" parent="WorldEnvironment/SunMoon"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+mesh = SubResource("SphereMesh_nbbcb")
+
+[node name="MoonLight" type="DirectionalLight3D" parent="WorldEnvironment/SunMoon/Moon"]
+transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0)
+light_color = Color(0.429751, 0.670269, 0.942086, 1)
+light_energy = 0.1
+
+[node name="FPSCharacter" parent="WorldEnvironment" instance=ExtResource("2_6riic")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.89538, 5.55213, -2.00642)
+
+[node name="Main" parent="." instance=ExtResource("2_0ixtf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2681, -12.8489, -3.26747)
