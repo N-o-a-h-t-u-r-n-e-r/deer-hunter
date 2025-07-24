@@ -31,3 +31,4 @@ func _process(delta: float) -> void:
 	sky_material.set_shader_parameter("sunPosz", sun_pos_z)
 	
 	sun_light.light_energy = sun_pos_y
+	#cycle_rotation += 1.0 * delta

@@ -7,8 +7,8 @@ uniform sampler2D cloudNoise : filter_nearest;
 uniform sampler2D starNoise : filter_nearest;    
 uniform float cloudAmount : hint_range(0.0, 1.0);
 uniform float starAmount : hint_range(0.0, 1.0);
-uniform float sunPosx: hint_range(0.0, 1.0);
-uniform float sunPosy: hint_range(0.0, 1.0);
+uniform float sunPosx: hint_range(-1.0, 1.0);
+uniform float sunPosy: hint_range(-1.0, 1.0);
 
 
 void sky() {
@@ -16,6 +16,12 @@ void sky() {
 	if(EYEDIR.y>0.0){
 		float gradientStep = (EYEDIR.x * sunPosx) + (EYEDIR.y * sunPosy);
 		vec3 gradientCol = mix(baseColor.rgb*0.8, baseColor.rgb*2.0, gradientStep*0.5);
+		
+		float sunDot = dot(EYEDIR.xy, vec2(sunPosx, sunPosy));
+		if(sunDot > 0.999){
+			gradientCol*=50.0;
+			}
+
        
 	    float star_n  = texture(starNoise, EYEDIR.xz / sqrt(EYEDIR.y)).r;
 		
