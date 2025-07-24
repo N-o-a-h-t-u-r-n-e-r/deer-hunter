@@ -18,11 +18,16 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 
-	var sun_pos = sun.global_position.y/2.0 + 0.5
+	var sun_pos_x = sun.global_position.x
+	var sun_pos_y = sun.global_position.y/2.0 + 0.5
+	var sun_pos_z = sun.global_position.z
 	var sky_material : ShaderMaterial = self.environment.sky.sky_material
 	sun_moon.rotation_degrees.x = cycle_rotation
-	sky_material.set_shader_parameter("baseColor", grad.sample(sun_pos))
-	var col : Color = sky_material.get_shader_parameter("cloudColor")
-	col.a = sun_pos
-	sky_material.set_shader_parameter("cloudColor", col)
-	sun_light.light_energy = sun_pos
+	sky_material.set_shader_parameter("baseColor", grad.sample(sun_pos_y))
+	sky_material.set_shader_parameter("cloudAmount", sun_pos_y)
+	sky_material.set_shader_parameter("starAmount", 0.3-sun_pos_y)
+	sky_material.set_shader_parameter("sunPosx", sun_pos_x)
+	sky_material.set_shader_parameter("sunPosy", sun.global_position.y)
+	sky_material.set_shader_parameter("sunPosz", sun_pos_z)
+	
+	sun_light.light_energy = sun_pos_y

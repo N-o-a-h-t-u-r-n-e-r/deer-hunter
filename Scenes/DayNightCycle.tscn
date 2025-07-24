@@ -27,7 +27,9 @@ offsets = PackedFloat32Array(0.784983, 1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_0ulc5"]
 noise_type = 4
-frequency = 1.0
+frequency = 0.1149
+fractal_type = 3
+fractal_weighted_strength = 1.0
 domain_warp_enabled = true
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ps4w7"]
@@ -39,13 +41,15 @@ noise = SubResource("FastNoiseLite_0ulc5")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0ixtf"]
 shader = ExtResource("1_icp1e")
-shader_parameter/baseColor = Color(0.042828, 0.0154158, 0.161395, 1)
-shader_parameter/cloudColor = Color(0.834614, 0.834614, 0.834614, 0)
+shader_parameter/baseColor = Color(0.37917, 0.209996, 0.230467, 1)
+shader_parameter/cloudColor = Color(0.834614, 0.834614, 0.834614, 1)
 shader_parameter/starColor = Color(1, 1, 1, 1)
 shader_parameter/cloudNoise = SubResource("NoiseTexture2D_kvqn8")
 shader_parameter/starNoise = SubResource("NoiseTexture2D_ps4w7")
-shader_parameter/cloudAmount = 0.0
-shader_parameter/starAmount = 0.0
+shader_parameter/cloudAmount = 0.184662
+shader_parameter/starAmount = 0.115338
+shader_parameter/sunPosx = -0.776046
+shader_parameter/sunPosy = -0.630676
 
 [sub_resource type="Sky" id="Sky_6riic"]
 sky_material = SubResource("ShaderMaterial_0ixtf")
@@ -58,8 +62,8 @@ reflected_light_source = 2
 adjustment_enabled = true
 
 [sub_resource type="Gradient" id="Gradient_nbbcb"]
-offsets = PackedFloat32Array(0, 0.510029, 0.584527, 1)
-colors = PackedColorArray(0.042828, 0.0154158, 0.161395, 1, 0.763481, 0.560534, 0.323057, 1, 0.437803, 0.616362, 1, 1, 0.617269, 0.809245, 1, 1)
+offsets = PackedFloat32Array(0, 0.361032, 0.567335, 0.65043, 1)
+colors = PackedColorArray(0.042828, 0.0154158, 0.161395, 1, 0.700408, 0.395839, 0.296438, 1, 0.841125, 0.504277, 0.262369, 1, 0.286693, 0.50102, 0.999987, 1, 0.312887, 0.67304, 0.999996, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_6riic"]
 
@@ -71,10 +75,10 @@ colors = PackedColorArray(0.042828, 0.0154158, 0.161395, 1, 0.763481, 0.560534, 
 environment = SubResource("Environment_nbbcb")
 script = ExtResource("2_nbbcb")
 grad = SubResource("Gradient_nbbcb")
-cycle_rotation = 90.0
+cycle_rotation = 39.1
 
 [node name="SunMoon" type="Node3D" parent="WorldEnvironment"]
-transform = Transform3D(-4.37114e-08, -1, 4.37114e-08, 0, -4.37114e-08, -1, 1, -4.37114e-08, 1.91069e-15, 0, 0, 0)
+transform = Transform3D(-4.37114e-08, -0.630676, -0.776046, 0, 0.776046, -0.630676, 1, -2.75677e-08, -3.39221e-08, 0, 0, 0)
 
 [node name="Sun" type="MeshInstance3D" parent="WorldEnvironment/SunMoon"]
 transform = Transform3D(1.3, 0, 0, 0, 1.3, 0, 0, 0, 1.3, 0, 0, 1)
@@ -83,7 +87,7 @@ mesh = SubResource("SphereMesh_6riic")
 [node name="SunLight" type="DirectionalLight3D" parent="WorldEnvironment/SunMoon/Sun"]
 transform = Transform3D(1, 0, 0, 0, 1, -3.8743e-08, 0, 3.8743e-08, 1, 0, 0, 0)
 light_color = Color(0.996091, 1, 0.731566, 1)
-light_energy = 0.0
+light_energy = 0.184662
 shadow_enabled = true
 shadow_blur = 0.1
 directional_shadow_mode = 0
