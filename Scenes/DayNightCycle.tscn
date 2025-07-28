@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://clyx4jv2318tq"]
+[gd_scene load_steps=14 format=3 uid="uid://clyx4jv2318tq"]
 
 [ext_resource type="Shader" uid="uid://di1q1c0bp34iq" path="res://Shaders/DayNightCycle.gdshader" id="1_icp1e"]
 [ext_resource type="Script" uid="uid://bs1jxw3fy1qhh" path="res://Scenes/DayNightCycle.gd" id="2_nbbcb"]
@@ -69,10 +69,6 @@ adjustment_enabled = true
 adjustment_contrast = 1.1
 adjustment_saturation = 2.0
 
-[sub_resource type="Gradient" id="Gradient_nbbcb"]
-offsets = PackedFloat32Array(0, 0.361032, 0.567335, 0.65043, 1)
-colors = PackedColorArray(0.042828, 0.0154158, 0.161395, 1, 0.700408, 0.395839, 0.296438, 1, 0.841125, 0.504277, 0.262369, 1, 0.286693, 0.50102, 0.999987, 1, 0.552941, 0.815686, 1, 1)
-
 [sub_resource type="SphereMesh" id="SphereMesh_6riic"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_nbbcb"]
@@ -82,7 +78,6 @@ colors = PackedColorArray(0.042828, 0.0154158, 0.161395, 1, 0.700408, 0.395839, 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_nbbcb")
 script = ExtResource("2_nbbcb")
-grad = SubResource("Gradient_nbbcb")
 cycle_rotation = -90.0
 
 [node name="SunMoon" type="Node3D" parent="WorldEnvironment"]

@@ -29,7 +29,7 @@ void sky() {
 		}
 		if(moonDot > 0.998){
 			
-			gradientCol = mix(vec3(0.1), vec3(0.8), 0.8);
+			gradientCol = mix(vec3(0.1), vec3(0.8), 0.7);
 		}
 		  
 	    float star_n = texture(starNoise, EYEDIR.xz / sqrt(EYEDIR.y)).r;
