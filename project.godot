@@ -29,6 +29,8 @@ window/vsync/vsync_mode=0
 [global_group]
 
 Animal=""
+Trap=""
+Player=""
 
 [input]
 
