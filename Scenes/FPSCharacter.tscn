@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://cga3otcq1yx13"]
+[gd_scene load_steps=26 format=4 uid="uid://i8lw2e3meqql"]
 
 [ext_resource type="Texture2D" uid="uid://fmwgyttmntj8" path="res://Terrain/crosshair001.png" id="1_3ki4t"]
 [ext_resource type="Script" uid="uid://bcdvgb6s8klpl" path="res://Scripts/player.gd" id="2_at3tt"]
@@ -13,8 +13,8 @@
 [ext_resource type="AudioStream" uid="uid://bw40yq5gt5vpi" path="res://Sounds/enfieldrifle-100832.mp3" id="10_yg5x2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0rwas"]
-radius = 0.71146
-height = 2.24779
+radius = 0.484853
+height = 1.97838
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_xhfnw"]
 
@@ -110,14 +110,14 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_dtoqt")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_yxd4i"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_ct606"]
 viewport_path = NodePath("FPSCharacter/Player/CameraPivot/Rifle/SubViewport")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_mw6rn"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2sxi3"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("7_uvl70")
-shader_parameter/texture_albedo = SubResource("ViewportTexture_yxd4i")
+shader_parameter/texture_albedo = SubResource("ViewportTexture_ct606")
 shader_parameter/buldge = 1.1
 shader_parameter/zoom = 0.895
 shader_parameter/vin_color = Color(0, 0, 0, 1)
@@ -226,7 +226,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_3ki4t")
 
-[node name="Player" type="CharacterBody3D" parent="."]
+[node name="Player" type="CharacterBody3D" parent="." groups=["Player"]]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
 collision_mask = 15
 script = ExtResource("2_at3tt")
@@ -235,7 +235,7 @@ bob_speed = 5.0
 bob_amount = 0.035
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.543159, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.445609, 0)
 shape = SubResource("CapsuleShape3D_0rwas")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
@@ -246,13 +246,17 @@ mesh = SubResource("CapsuleMesh_xhfnw")
 
 [node name="CameraPivot" type="Node3D" parent="Player"]
 
+[node name="ObjectDetection" type="RayCast3D" parent="Player/CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.294419, -0.640616)
+target_position = Vector3(0, -1.5, 0)
+
 [node name="FootstepGrass" type="AudioStreamPlayer3D" parent="Player/CameraPivot"]
 transform = Transform3D(3.33333, 0, 0, 0, 3.33333, 0, 0, 0, 3.33333, 0, 0, 0)
 stream = ExtResource("3_ua7ai")
 volume_db = -25.0
 
 [node name="CollDet" type="RayCast3D" parent="Player/CameraPivot"]
-transform = Transform3D(9.55342e-16, 2.18557e-08, 0.5, 0.5, -2.18557e-08, 0, 2.18557e-08, 0.5, -2.18557e-08, 0.643452, -0.178574, -0.770325)
+transform = Transform3D(9.55342e-16, 2.18557e-08, 0.5, 0.5, -2.18557e-08, 0, 2.18557e-08, 0.5, -2.18557e-08, 0.643451, -0.178574, -0.770325)
 target_position = Vector3(0, -3.065, 0)
 collision_mask = 7
 
@@ -285,7 +289,7 @@ use_hdr_2d = true
 scaling_3d_mode = 0
 
 [node name="CamContainer" type="Node3D" parent="Player/CameraPivot/Rifle/SubViewport"]
-transform = Transform3D(-6.55756e-09, 0, 0.15002, 0, 0.15, 0, -0.15002, 0, -6.55756e-09, -31.7974, 18.9501, 2.10906)
+transform = Transform3D(-6.55756e-09, 0, 0.15002, 0, 0.15, 0, -0.15002, 0, -6.55756e-09, 0.192652, -0.0105721, -0.264623)
 
 [node name="ADSCamera" type="Camera3D" parent="Player/CameraPivot/Rifle/SubViewport/CamContainer"]
 transform = Transform3D(-1.45686e-07, 0, -3.3329, 0, 3.33334, 0, 3.3329, 0, -1.45686e-07, 0.549376, 0.00987625, 0)
@@ -311,7 +315,7 @@ remote_path = NodePath("../SubViewport/CamContainer")
 transform = Transform3D(-3.0598e-09, -0.07, 0, 0.069976, -3.05875e-09, 0.00183239, -0.00183239, 8.00962e-11, 0.069976, -0.53, -0.00730858, 0)
 mesh = ExtResource("6_yrmd3")
 skeleton = NodePath("")
-surface_material_override/0 = SubResource("ShaderMaterial_mw6rn")
+surface_material_override/0 = SubResource("ShaderMaterial_2sxi3")
 
 [node name="Body" type="MeshInstance3D" parent="Player/CameraPivot/Rifle"]
 transform = Transform3D(0.00158487, 0.565718, 0, -0.140567, 0.0063784, 0, 0, 0, 0.140576, 0, 0, 0)
@@ -319,7 +323,7 @@ mesh = SubResource("ArrayMesh_v3ea4")
 skeleton = NodePath("")
 
 [node name="HitRange" type="RayCast3D" parent="Player/CameraPivot/Rifle"]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -2.11758e-22, 0, 1, 0, 0, 0)
 target_position = Vector3(0, -2000, 0)
 collision_mask = 7
 

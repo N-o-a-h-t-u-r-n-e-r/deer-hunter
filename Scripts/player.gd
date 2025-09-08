@@ -18,6 +18,7 @@ var vertical_rotation = 0.0
 @onready var cam : Camera3D = $CameraPivot/Camera3D
 @onready var cam_pos = cam.position
 @onready var stand_pos: Vector3 = $CameraPivot.position
+@onready var progress_bar: ProgressBar = $Progress/ProgressBar
 var bob_timer = 0.0
 var step_timer = 0.0
 var curr_speed = speed
@@ -26,12 +27,20 @@ var curr_speed = speed
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
+func _process(delta: float) -> void:
+	progress_bar.value -= 20 * delta
+	
+	if Input.is_action_just_pressed("action"):
+		progress_bar.value += 10 
+	if progress_bar.value == 100:
+		progress_bar.visible = false
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 		
+	 
 
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
@@ -48,6 +57,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		$CameraPivot.position.y = stand_pos.y
 		
+
 		
 
 	# Get the input direction and handle the movement/deceleration.

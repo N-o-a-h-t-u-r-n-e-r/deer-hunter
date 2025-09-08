@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=4 uid="uid://d1tn2o6ymeiyx"]
+[gd_scene load_steps=41 format=4 uid="uid://d1tn2o6ymeiyx"]
 
 [ext_resource type="Texture2D" uid="uid://fmwgyttmntj8" path="res://Terrain/crosshair001.png" id="1_bg37v"]
 [ext_resource type="Script" uid="uid://bcdvgb6s8klpl" path="res://Scripts/player.gd" id="2_cy6o3"]
@@ -11,8 +11,9 @@
 [ext_resource type="AudioStream" uid="uid://bgaxqgeixh7xc" path="res://Sounds/084147_lever-action-rifle-39835.mp3" id="9_nssql"]
 [ext_resource type="AudioStream" uid="uid://dvescufdyxehr" path="res://Sounds/rifle_reload.mp3" id="10_y0ty6"]
 [ext_resource type="AudioStream" uid="uid://bw40yq5gt5vpi" path="res://Sounds/enfieldrifle-100832.mp3" id="11_sc4v1"]
-[ext_resource type="Script" uid="uid://dqj2no5qkxhtx" path="res://Scenes/SimpleObject.gd" id="12_mkprd"]
+[ext_resource type="Script" uid="uid://dqj2no5qkxhtx" path="res://Scripts/BearTrap.gd" id="12_mkprd"]
 [ext_resource type="Texture2D" uid="uid://c1cpx3c58wbr1" path="res://Models/BearTrap_m4Mag.png" id="13_1q7ox"]
+[ext_resource type="AudioStream" uid="uid://d0m5v2rghcgl4" path="res://Sounds/bear_trap_close.mp3" id="14_1q7ox"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_ftrsn"]
 
@@ -55,8 +56,8 @@ shader_parameter/selected = false
 [sub_resource type="BoxShape3D" id="BoxShape3D_cpag2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0rwas"]
-radius = 0.71146
-height = 2.24779
+radius = 0.484853
+height = 1.97838
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_xhfnw"]
 
@@ -152,14 +153,14 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_dtoqt")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_ct606"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_jda31"]
 viewport_path = NodePath("FPSCharacter/Player/CameraPivot/Rifle/SubViewport")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2sxi3"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2u2x3"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("2_q8l06")
-shader_parameter/texture_albedo = SubResource("ViewportTexture_ct606")
+shader_parameter/texture_albedo = SubResource("ViewportTexture_jda31")
 shader_parameter/buldge = 1.1
 shader_parameter/zoom = 0.895
 shader_parameter/vin_color = Color(0, 0, 0, 1)
@@ -368,8 +369,41 @@ speed = 1.0
 bob_speed = 5.0
 bob_amount = 0.035
 
+[node name="Progress" type="Control" parent="FPSCharacter/Player"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="FPSCharacter/Player/Progress"]
+visible = false
+modulate = Color(0.102619, 0.97383, 0.389616, 1)
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -392.0
+offset_top = -21.5
+offset_right = 392.0
+offset_bottom = 21.5
+grow_horizontal = 2
+grow_vertical = 2
+value = 26.45
+show_percentage = false
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="FPSCharacter/Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.543159, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.445609, 0)
 shape = SubResource("CapsuleShape3D_0rwas")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="FPSCharacter/Player"]
@@ -380,13 +414,17 @@ mesh = SubResource("CapsuleMesh_xhfnw")
 
 [node name="CameraPivot" type="Node3D" parent="FPSCharacter/Player"]
 
+[node name="ObjectDetection" type="RayCast3D" parent="FPSCharacter/Player/CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.294419, -0.640616)
+target_position = Vector3(0, -1.5, 0)
+
 [node name="FootstepGrass" type="AudioStreamPlayer3D" parent="FPSCharacter/Player/CameraPivot"]
 transform = Transform3D(3.33333, 0, 0, 0, 3.33333, 0, 0, 0, 3.33333, 0, 0, 0)
 stream = ExtResource("3_mkprd")
 volume_db = -25.0
 
 [node name="CollDet" type="RayCast3D" parent="FPSCharacter/Player/CameraPivot"]
-transform = Transform3D(9.55342e-16, 2.18557e-08, 0.5, 0.5, -2.18557e-08, 0, 2.18557e-08, 0.5, -2.18557e-08, 0.643452, -0.178574, -0.770325)
+transform = Transform3D(9.55342e-16, 2.18557e-08, 0.5, 0.5, -2.18557e-08, 0, 2.18557e-08, 0.5, -2.18557e-08, 0.643451, -0.178574, -0.770325)
 target_position = Vector3(0, -3.065, 0)
 collision_mask = 7
 
@@ -445,7 +483,7 @@ remote_path = NodePath("../SubViewport/CamContainer")
 transform = Transform3D(-3.0598e-09, -0.07, 0, 0.069976, -3.05875e-09, 0.00183239, -0.00183239, 8.00962e-11, 0.069976, -0.53, -0.00730858, 0)
 mesh = ExtResource("7_neyu1")
 skeleton = NodePath("")
-surface_material_override/0 = SubResource("ShaderMaterial_2sxi3")
+surface_material_override/0 = SubResource("ShaderMaterial_2u2x3")
 
 [node name="Body" type="MeshInstance3D" parent="FPSCharacter/Player/CameraPivot/Rifle"]
 transform = Transform3D(0.00158487, 0.565718, 0, -0.140567, 0.0063784, 0, 0, 0, 0.140576, 0, 0, 0)
@@ -453,7 +491,7 @@ mesh = SubResource("ArrayMesh_v3ea4")
 skeleton = NodePath("")
 
 [node name="HitRange" type="RayCast3D" parent="FPSCharacter/Player/CameraPivot/Rifle"]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -2.11758e-22, 0, 1, 0, 0, 0)
 target_position = Vector3(0, -2000, 0)
 collision_mask = 7
 
@@ -476,7 +514,7 @@ current = true
 near = 0.001
 
 [node name="BearTrap" type="Node3D" parent="." groups=["Trap"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.00554, 0.415206, -0.590466)
+transform = Transform3D(0.075, 0, 0, 0, 0.075, 0, 0, 0, 0.075, 0.120353, 0.415206, -2.10467)
 script = ExtResource("12_mkprd")
 
 [node name="Armature" type="Node3D" parent="BearTrap"]
@@ -509,7 +547,7 @@ bones/2/scale = Vector3(1, 1, 1)
 mesh = SubResource("ArrayMesh_1y1eh")
 skin = SubResource("Skin_ee38g")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="BearTrap"]
+[node name="BearTrapAnimation" type="AnimationPlayer" parent="BearTrap"]
 libraries = {
 &"": SubResource("AnimationLibrary_7coif")
 }
@@ -517,10 +555,27 @@ libraries = {
 [node name="Area3D" type="Area3D" parent="BearTrap"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="BearTrap/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0679989, 0.145132, 0.0137329)
+transform = Transform3D(0.655, 0, 0, 0, 0.655, 0, 0, 0, 0.655, -0.0679989, 0.302809, 0.0137329)
 shape = SubResource("BoxShape3D_tjhet")
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="BearTrap"]
+[node name="ClampSound" type="AudioStreamPlayer3D" parent="BearTrap"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.00554, -0.415206, 0.590466)
+stream = ExtResource("14_1q7ox")
+volume_db = -10.0
 
+[node name="DisarmLabel" type="Label3D" parent="BearTrap"]
+transform = Transform3D(4.25532, 0, 0, 0, 4.25532, 0, 0, 0, 4.25532, 0, 2.05747, 0.0333786)
+visible = false
+billboard = 1
+double_sided = false
+alpha_cut = 1
+alpha_hash_scale = 0.0
+texture_filter = 0
+render_priority = 1
+outline_render_priority = 0
+text = "Disarm (E)"
+font = ExtResource("5_tjhet")
+font_size = 24
+
+[connection signal="value_changed" from="FPSCharacter/Player/Progress/ProgressBar" to="BearTrap" method="_on_progress_bar_value_changed"]
 [connection signal="body_entered" from="BearTrap/Area3D" to="BearTrap" method="_on_area_3d_body_entered"]
