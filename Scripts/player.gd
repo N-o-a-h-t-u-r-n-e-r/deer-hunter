@@ -32,6 +32,7 @@ func _process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("action"):
 		progress_bar.value += 10 
+		
 	if progress_bar.value == 100:
 		progress_bar.visible = false
 

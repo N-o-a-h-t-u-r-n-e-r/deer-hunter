@@ -148,7 +148,6 @@ func shoot():
 			var body = collider.get_node("Hitbox") as CollisionShape3D
 			var animal = collider.get_node("deer")
 			body.disabled = true
-			animal.get_node("Armature/Skeleton3D/AnimalBones").ragdoll()
 			animal.change_state(animal.State.DEAD)
 		
 	curr_ammo -= 1

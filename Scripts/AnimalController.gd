@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
 @export var walk_speed: float = 1.0
-@export var run_speed: float = 2.0
+@export var run_speed: float = 4.0
 @export var player: CharacterBody3D
 @onready var animal: Node3D = $deer
 @onready var hitbox: CollisionShape3D = $Hitbox

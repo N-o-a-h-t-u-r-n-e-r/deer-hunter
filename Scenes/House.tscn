@@ -153,14 +153,14 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_dtoqt")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_jda31"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_1q7ox"]
 viewport_path = NodePath("FPSCharacter/Player/CameraPivot/Rifle/SubViewport")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2u2x3"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tjhet"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("2_q8l06")
-shader_parameter/texture_albedo = SubResource("ViewportTexture_jda31")
+shader_parameter/texture_albedo = SubResource("ViewportTexture_1q7ox")
 shader_parameter/buldge = 1.1
 shader_parameter/zoom = 0.895
 shader_parameter/vin_color = Color(0, 0, 0, 1)
@@ -483,7 +483,7 @@ remote_path = NodePath("../SubViewport/CamContainer")
 transform = Transform3D(-3.0598e-09, -0.07, 0, 0.069976, -3.05875e-09, 0.00183239, -0.00183239, 8.00962e-11, 0.069976, -0.53, -0.00730858, 0)
 mesh = ExtResource("7_neyu1")
 skeleton = NodePath("")
-surface_material_override/0 = SubResource("ShaderMaterial_2u2x3")
+surface_material_override/0 = SubResource("ShaderMaterial_tjhet")
 
 [node name="Body" type="MeshInstance3D" parent="FPSCharacter/Player/CameraPivot/Rifle"]
 transform = Transform3D(0.00158487, 0.565718, 0, -0.140567, 0.0063784, 0, 0, 0, 0.140576, 0, 0, 0)

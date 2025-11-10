@@ -2,7 +2,7 @@ extends Node3D
 
 @onready var animation_player : AnimationPlayer = $BearTrapAnimation
 @onready var trap_close : AudioStreamPlayer3D = $ClampSound
-@onready var disarm_lable : Label3D = $DisarmLabel
+@onready var disarm_label : Label3D = $DisarmLabel
 
 enum State{OPEN, CLOSED, DEACTIVATED}
 var curr_state:State = State.OPEN
@@ -12,7 +12,7 @@ func trigger():
 	animation_player.play("Clamp")
 	trap_close.play()
 	curr_state = State.CLOSED
-	disarm_lable.visible = true
+	disarm_label.visible = true
 	
 	
 func _on_area_3d_body_entered(body: CharacterBody3D) -> void:
@@ -26,7 +26,7 @@ func _on_area_3d_body_entered(body: CharacterBody3D) -> void:
 		
 
 func _on_progress_bar_value_changed(value: float) -> void:
-	if value == 100:
+	if value == 100:	
 		curr_state = State.DEACTIVATED
 		character.set_physics_process(true)
 		self.queue_free()

@@ -50,7 +50,7 @@ func change_state(s):
 		State.FLEE:
 			set_movement_target(500.0)
 			animation_player.speed_scale = 3.0
-			animation_player.play("Flee")
+			animation_player.play("Gallop")
 			
 		State.IDLE:
 			animation_player.speed_scale = 1.2
@@ -58,7 +58,8 @@ func change_state(s):
 			
 		State.DEAD:
 			print("dead")
-			animation_player.stop(false)
+			animation_player.play("Death")
+
 	
 	state = s
 
