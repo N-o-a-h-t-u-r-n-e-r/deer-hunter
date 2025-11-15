@@ -1,0 +1,67 @@
+[gd_scene load_steps=10 format=3 uid="uid://db5cv7kcp2bno"]
+
+[ext_resource type="Script" uid="uid://crelxsp6r4r88" path="res://Scenes/main_menu.gd" id="1_tt5f1"]
+[ext_resource type="StyleBox" uid="uid://d04o3fjfx2uvg" path="res://Scenes/ButtonStyleBoxNormal.tres" id="2_8saeu"]
+[ext_resource type="StyleBox" uid="uid://bp2ty7viivcol" path="res://Scenes/ButtonStyleBoxHover.tres" id="2_ghw46"]
+[ext_resource type="FontFile" uid="uid://03sgifrxayrd" path="res://PressStart2P-Regular.ttf" id="3_ghw46"]
+[ext_resource type="Texture2D" uid="uid://byp8iu1qpkprb" path="res://Textures/mdi--play(1).svg" id="5_xim88"]
+[ext_resource type="Texture2D" uid="uid://qkaty8spbvta" path="res://Textures/material-symbols--settings(1).svg" id="6_koqhg"]
+[ext_resource type="Texture2D" uid="uid://c34f1xyriftmd" path="res://Textures/iconamoon--exit.svg" id="7_cmrfp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xim88"]
+
+[sub_resource type="Theme" id="Theme_df05h"]
+default_font = ExtResource("3_ghw46")
+Button/colors/font_color = Color(0.804743, 0.804743, 0.804743, 1)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/colors/font_outline_color = Color(0.34902, 0.196078, 0, 1)
+Button/colors/icon_normal_color = Color(0.803922, 0.803922, 0.803922, 1)
+Button/constants/icon_max_width = 55
+Button/constants/outline_size = 10
+Button/font_sizes/font_size = 20
+Button/styles/focus = SubResource("StyleBoxEmpty_xim88")
+Button/styles/hover = ExtResource("2_ghw46")
+Button/styles/normal = ExtResource("2_8saeu")
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tt5f1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -219.5
+offset_top = -167.0
+offset_right = 219.5
+offset_bottom = 167.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_df05h")
+theme_override_constants/separation = 35
+
+[node name="SinButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_icons/icon = ExtResource("5_xim88")
+text = "Start"
+
+[node name="OptionsButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_icons/icon = ExtResource("6_koqhg")
+text = "Options"
+
+[node name="QuitButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_icons/icon = ExtResource("7_cmrfp")
+text = "Quit"
+
+[connection signal="pressed" from="VBoxContainer/SinButton" to="." method="_on_sin_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
