@@ -1,4 +1,4 @@
-@tool
+#@tool
 extends WorldEnvironment
 
 @export var light : float = 1.0

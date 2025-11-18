@@ -1,0 +1,17 @@
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://pycx8tisr5mq"]
+
+[ext_resource type="StyleBox" uid="uid://ctu524pc5wlwj" path="res://Scenes/WoodButtonHover.tres" id="1_yxpi2"]
+[ext_resource type="StyleBox" uid="uid://6ccsss7rfn03" path="res://Scenes/WoodButtonNormal.tres" id="2_f17vk"]
+[ext_resource type="FontFile" uid="uid://03sgifrxayrd" path="res://PressStart2P-Regular.ttf" id="3_2q3ya"]
+
+[resource]
+default_font = ExtResource("3_2q3ya")
+Button/colors/font_color = Color(0.804743, 0.804743, 0.804743, 1)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/colors/icon_normal_color = Color(0.803922, 0.803922, 0.803922, 1)
+Button/constants/icon_max_width = 55
+Button/font_sizes/font_size = 20
+Button/styles/focus = ExtResource("1_yxpi2")
+Button/styles/hover = ExtResource("1_yxpi2")
+Button/styles/normal = ExtResource("2_f17vk")
+ProgressBar/font_sizes/font_size = 33

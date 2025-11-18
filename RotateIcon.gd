@@ -1,5 +1,6 @@
+@tool
 extends Node3D
-
+@export var speed:float = 1.0
 
 func _process(delta: float) -> void:
-	rotate_y(delta * 1.0)  # spin nicely
+	rotate_y(delta * speed)  # spin nicely
