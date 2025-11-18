@@ -1,3 +1,4 @@
+@tool
 extends WorldEnvironment
 
 @export var light : float = 1.0
@@ -29,5 +30,6 @@ func _process(delta: float) -> void:
 	sky_material.set_shader_parameter("skyColor", sky_light_grad.sample(sun_pos_y))
 	
 	sun_light.light_energy =  pow(sin(sun_pos_y) * light, 4.0)
+
 	if(cycle_rotation < 100.0):
 		cycle_rotation += day_cycle_speed * delta
