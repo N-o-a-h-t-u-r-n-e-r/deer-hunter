@@ -1,0 +1,9 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://ctu524pc5wlwj"]
+
+[ext_resource type="Texture2D" uid="uid://oieos03oxtmv" path="res://Textures/wood_low_res.png" id="1_xeuou"]
+
+[resource]
+texture = ExtResource("1_xeuou")
+texture_margin_top = 10.0
+texture_margin_right = 40.0
+texture_margin_bottom = 10.0

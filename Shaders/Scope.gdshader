@@ -10,6 +10,7 @@ uniform float vignette_radius = 5.535;
 uniform float metallic = 0.2;
 uniform float roughness = 0.2;
 
+
 void vertex() {
 	// Called for every vertex the material is visible on.
 }
@@ -47,6 +48,7 @@ void fragment() {
 	ALPHA = col.a;
 	METALLIC = metallic;
 	ROUGHNESS = roughness;
+	SPECULAR = 0.0;
 }
 
 //void light() {
