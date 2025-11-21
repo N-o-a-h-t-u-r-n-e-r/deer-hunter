@@ -12,7 +12,7 @@ extends MultiMeshInstance3D
 
 var chunk_size : int
 
-# Collision layer bits (Godot: Layer 1 -> bit 0, Layer 2 -> bit 1, Layer 4 -> bit 3)
+
 const LAYER_TERRAIN := 1 << 1        # layer 2 in the editor
 const LAYER_WATER_BLOCKER := 1 << 3  # layer 4 in the editor
 
@@ -46,10 +46,10 @@ func _ready() -> void:
 		var to = global_transform.origin + Vector3(x, -raycast_height, z)
 
 		var query = PhysicsRayQueryParameters3D.create(from, to)
-		# Hit terrain + water blocker
+
 		query.collision_mask = LAYER_TERRAIN | LAYER_WATER_BLOCKER
 		query.collide_with_bodies = true
-		query.collide_with_areas = true  # in case water is an Area3D
+		query.collide_with_areas = true 
 
 		var result = space_state.intersect_ray(query)
 	
