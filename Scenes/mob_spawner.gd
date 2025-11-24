@@ -5,15 +5,17 @@ extends Node3D
 @export var spawn_count: int = 8
 @export var spawn_radius: int = 100
 @export var raycast_height : float = 100.0
-
-const LAYER_TERRAIN := 1 << 1        # layer 2 in the editor
+@export var deer_count: Label
+var curr_count:int
+const LAYER_TERRAIN := 1 << 1
 const LAYER_WATER_BLOCKER := 1 << 3 
 
 func _ready() -> void:
 	var rng = RandomNumberGenerator.new()
 	rng.seed = 100
 	var space_state = get_world_3d().direct_space_state
-	spawn_count = 8
+	spawn_count = 20
+	curr_count = 0
 	
 	if stag_scene:
 		while spawn_count > 0:
@@ -52,9 +54,19 @@ func _ready() -> void:
 			var stag:CharacterBody3D = stag_scene.instantiate()
 			stag.player = get_node("../FPSCharacter/Player")
 			stag.transform = Transform3D((Basis(Vector3.UP, rng.randf() * TAU)),pos)
+			stag.scale = Vector3(0.7,0.7,0.7)
 			add_child(stag)
+			curr_count+=1
+			stag.died.connect(_on_npc_died)
+			update_label()
 			spawn_count-=1
 
+func _on_npc_died():
+	curr_count -= 1
+	update_label()
+
+func update_label():
+	deer_count.text = str( curr_count)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:

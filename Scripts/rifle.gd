@@ -149,6 +149,7 @@ func shoot():
 			var animal = collider.get_node("deer")
 			body.disabled = true
 			animal.change_state(animal.State.DEAD)
+			collider.die()
 		
 	curr_ammo -= 1
 	if(!$RifleShoot.playing):

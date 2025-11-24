@@ -50,7 +50,7 @@ func change_state(s):
 			
 		State.FLEE:
 			set_movement_target(500.0)
-			animation_player.speed_scale = 3.0
+			animation_player.speed_scale = 1.3
 			animation_player.play("Gallop")
 			
 		State.IDLE:
