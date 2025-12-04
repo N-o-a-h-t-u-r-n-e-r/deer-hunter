@@ -34,6 +34,9 @@ var bullet_rot
 var mouse_delta := Vector2.ZERO
 var curr_ammo : int
 
+var BoltSoundPlaying : bool = false
+var ShootSoundPlaying : bool = false
+
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
@@ -67,8 +70,12 @@ func _process(delta: float) -> void:
 		position.y = move_toward(position.y, hip_pos.y - 0.2, delta * weapon_sway_speed)
 	
 	if((cooldown <= rate_of_fire * 0.3) and bolting):
-		if(!$RifleBolt.playing):
-			$RifleBolt.play()
+		#$RifleBoltFMOD.play()
+		if(!BoltSoundPlaying):
+			BoltSoundPlaying = true
+			$RifleBoltFMOD.play()
+		#if(!$RifleBoltFMOD.playing):
+			#$RifleBolt.play()
 			
 	if((cooldown <= rate_of_fire * 0.2) and bolting):
 		
@@ -120,8 +127,8 @@ func _process(delta: float) -> void:
 					
 		elif(Input.is_action_just_pressed("reload") and !bolting and !reloading and curr_ammo != 6):
 			reloading = true
-			$RifleReload.play()
-			
+			#$RifleReload.play()
+			$ReloadFMOD.play_one_shot()
 		
 		else:
 			move_to_base(offset_hip_pos, delta)
@@ -151,8 +158,11 @@ func shoot():
 			animal.change_state(animal.State.DEAD)
 		
 	curr_ammo -= 1
-	if(!$RifleShoot.playing):
-		$RifleShoot.play()
+	if(!ShootSoundPlaying):
+		$ShootFMOD.play()
+	#if(!$RifleShoot.playing):
+		#$RifleShoot.play()
+
 	bolting = true
 		
 		
@@ -167,3 +177,13 @@ func rifle_sway(offset_rotation, delta):
 	
 func update_GUI():
 	$AmmoDisplay.text = (str(curr_ammo) + " / " + str(total_ammo))
+
+
+func _on_rifle_bolt_fmod_stopped() -> void:
+	BoltSoundPlaying = false
+	#$RifleBoltFMOD.stop()
+	 # Replace with function body.
+
+
+func _on_shoot_fmod_stopped() -> void:
+	ShootSoundPlaying = false # Replace with function body.

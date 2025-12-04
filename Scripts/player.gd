@@ -1,5 +1,6 @@
 extends CharacterBody3D
 
+
 #Exports
 @export var speed = 5.0
 @export var sprint_speed = 2.0
@@ -81,8 +82,9 @@ func _physics_process(delta: float) -> void:
 	
 	
 	if(step_timer >= 3.0):
-		$CameraPivot/FootstepGrass.pitch_scale = randf_range(0.8, 1.2)
-		$CameraPivot/FootstepGrass.play()
+		#$CameraPivot/FootstepGrass.pitch_scale = randf_range(0.8, 1.2)
+		#$CameraPivot/FootstepGrass.play()
+		$CameraPivot/FootstepFMOD.play_one_shot()
 		step_timer = 0.0
 	
 	move_and_slide()
