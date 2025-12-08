@@ -54,3 +54,7 @@ func align_with_surface():
 func _on_area_3d_body_entered(body: PhysicsBody3D) -> void:
 	if(body == player and animal.state != animal.State.DEAD):
 		animal.change_state(animal.State.FLEE)
+		
+func footstepSound():
+	$DeerFootstepFMOD.play_one_shot()
+	

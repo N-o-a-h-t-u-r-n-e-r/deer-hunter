@@ -32,7 +32,9 @@ func _process(delta: float) -> void:
 	progress_bar.value -= 20 * delta
 	
 	if Input.is_action_just_pressed("action"):
-		progress_bar.value += 10 
+		if(progress_bar.visible):
+			progress_bar.value += 10 
+			$Progress/BearTrapEscapeFMOD.play_one_shot()
 		
 	if progress_bar.value == 100:
 		progress_bar.visible = false
