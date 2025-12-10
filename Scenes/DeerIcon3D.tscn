@@ -1,6 +1,5 @@
-[gd_scene load_steps=18 format=4 uid="uid://dsnxai8jls0bm"]
+[gd_scene load_steps=11 format=4 uid="uid://dsnxai8jls0bm"]
 
-[ext_resource type="Shader" uid="uid://dlwn7uddrxewl" path="res://Shaders/Wobble.gdshader" id="1_1b0ds"]
 [ext_resource type="Script" uid="uid://d4c6dsvn06202" path="res://RotateIcon.gd" id="1_plg0f"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6hxdr"]
@@ -41,16 +40,6 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_nc4a0")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_11mlf"]
-render_priority = 0
-shader = ExtResource("1_1b0ds")
-shader_parameter/albedo_color = Color(0.288856, 0.183933, 0.0350847, 1)
-shader_parameter/use_texture = true
-shader_parameter/roughness = 0.5
-shader_parameter/specular = 0.1
-shader_parameter/metallic = 0.0
-shader_parameter/grid_size = 200.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h4u27"]
 resource_name = "Material"
@@ -268,56 +257,6 @@ bind/37/name = &"FF.R"
 bind/37/bone = -1
 bind/37/pose = Transform3D(-1, -5.07272e-07, -1.43053e-06, 7.29097e-09, -0.944092, 0.329683, -1.51779e-06, 0.329683, 0.944092, -0.374137, -0.273505, -1.13083)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_by0so"]
-render_priority = 0
-shader = ExtResource("1_1b0ds")
-shader_parameter/albedo_color = Color(0.821908, 0.526704, 0.297854, 1)
-shader_parameter/use_texture = false
-shader_parameter/roughness = 0.5
-shader_parameter/specular = 0.01
-shader_parameter/metallic = 0.0
-shader_parameter/grid_size = 200.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_01is7"]
-render_priority = 0
-shader = ExtResource("1_1b0ds")
-shader_parameter/albedo_color = Color(0.136826, 0.136826, 0.136826, 1)
-shader_parameter/use_texture = true
-shader_parameter/roughness = 0.5
-shader_parameter/specular = 0.01
-shader_parameter/metallic = 0.0
-shader_parameter/grid_size = 200.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ouctj"]
-render_priority = 0
-shader = ExtResource("1_1b0ds")
-shader_parameter/albedo_color = Color(0.972131, 0.820721, 0.743437, 1)
-shader_parameter/use_texture = false
-shader_parameter/roughness = 0.5
-shader_parameter/specular = 0.01
-shader_parameter/metallic = 0.0
-shader_parameter/grid_size = 200.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_yt65g"]
-render_priority = 0
-shader = ExtResource("1_1b0ds")
-shader_parameter/albedo_color = Color(0.660562, 0.444213, 0.222936, 1)
-shader_parameter/use_texture = false
-shader_parameter/roughness = 0.5
-shader_parameter/specular = 0.01
-shader_parameter/metallic = 0.0
-shader_parameter/grid_size = 200.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_f84tt"]
-render_priority = 0
-shader = ExtResource("1_1b0ds")
-shader_parameter/albedo_color = Color(0, 0, 0, 1)
-shader_parameter/use_texture = true
-shader_parameter/roughness = 0.5
-shader_parameter/specular = 0.01
-shader_parameter/metallic = 0.0
-shader_parameter/grid_size = 200.0
-
 [node name="Node3D" type="Node3D"]
 
 [node name="IconRender" type="SubViewport" parent="."]
@@ -339,18 +278,12 @@ script = ExtResource("1_plg0f")
 transform = Transform3D(0.196, -3.85044e-11, -2.90788e-12, 3.73902e-11, 0.196, -8.17776e-08, 3.30897e-12, 6.42538e-08, 0.196, -0.001029, 0.577649, 0.456366)
 mesh = SubResource("ArrayMesh_o8s2x")
 skeleton = NodePath("")
-surface_material_override/0 = SubResource("ShaderMaterial_11mlf")
 
 [node name="Stag" type="MeshInstance3D" parent="IconRender/Node3D/Stag2"]
 transform = Transform3D(0.196, 0, 0, 0, 0.196, 0, 0, 0, 0.196, 0, -0.201872, 0)
 mesh = SubResource("ArrayMesh_qfh5x")
 skin = SubResource("Skin_f0jv7")
 skeleton = NodePath("")
-surface_material_override/0 = SubResource("ShaderMaterial_by0so")
-surface_material_override/1 = SubResource("ShaderMaterial_01is7")
-surface_material_override/2 = SubResource("ShaderMaterial_ouctj")
-surface_material_override/3 = SubResource("ShaderMaterial_yt65g")
-surface_material_override/4 = SubResource("ShaderMaterial_f84tt")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="IconRender/Node3D"]
 transform = Transform3D(0.914798, -0.297452, 0.273253, 0, 0.676516, 0.736428, -0.403913, -0.673682, 0.618875, 0, 0, 0)

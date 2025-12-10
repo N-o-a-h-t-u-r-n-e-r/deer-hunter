@@ -14,7 +14,7 @@ General/banks_path="res://addons/fmod/banks/Desktop"
 
 [application]
 
-config/name="Deer Hunter"
+config/name="8 Sins"
 run/main_scene="uid://bpkva2khanv6l"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
@@ -126,7 +126,7 @@ textures/decals/filter=0
 textures/light_projectors/filter=0
 environment/screen_space_reflection/roughness_quality=0
 global_illumination/sdfgi/probe_ray_count=0
-global_illumination/sdfgi/frames_to_converge=1
-global_illumination/sdfgi/frames_to_update_lights=4
+global_illumination/sdfgi/frames_to_converge=0
+global_illumination/sdfgi/frames_to_update_lights=0
 environment/volumetric_fog/volume_size=32
 environment/volumetric_fog/volume_depth=32

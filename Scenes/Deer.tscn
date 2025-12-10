@@ -4530,7 +4530,7 @@ bones/38/rotation = Quaternion(-1.80387e-08, 0.9998, 0.0199896, -4.33039e-07)
 bones/38/scale = Vector3(1, 1, 1)
 
 [node name="Stag_Horns" type="BoneAttachment3D" parent="deer/AnimalArmature/Skeleton3D"]
-transform = Transform3D(1, -1.96451e-10, -1.48361e-11, 1.90767e-10, 1, -4.17233e-07, 1.68825e-11, 3.27826e-07, 1, -0.00524999, 3.97715, 2.3284)
+transform = Transform3D(1, -1.9645086e-10, -1.4836132e-11, 1.9076651e-10, 0.99999994, -4.172325e-07, 1.6882495e-11, 3.2782555e-07, 1, -0.005249994, 3.9771473, 2.3284)
 bone_name = "Stag_Horns"
 bone_idx = 9
 

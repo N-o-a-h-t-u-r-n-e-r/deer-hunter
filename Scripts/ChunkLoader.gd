@@ -1,4 +1,3 @@
-@tool
 extends Node3D
 
 @export var global_size : int
@@ -11,6 +10,7 @@ var chunks := {}
 
 func _ready() -> void:
 	#Make sure total coverage stays consistent with different chunk sizes
+	@warning_ignore("integer_division")
 	var size = ceil(global_size/chunk_size)
 	for x in range(-size, size+1):
 		for z in range(-size, size+1):

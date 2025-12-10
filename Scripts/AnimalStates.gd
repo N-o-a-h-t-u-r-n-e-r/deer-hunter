@@ -1,10 +1,11 @@
+
 extends Node3D
 
 enum State{IDLE, WALK, FLEE, DEAD}
 var state 
 var timer: float
 
-@export var animal: CharacterBody3D
+@export var animal: CharacterBody3D 
 @onready var navigation_agent: NavigationAgent3D = get_node("../NavigationAgent3D")
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
@@ -49,7 +50,7 @@ func change_state(s):
 			
 		State.FLEE:
 			set_movement_target(500.0)
-			animation_player.speed_scale = 3.0
+			animation_player.speed_scale = 1.3
 			animation_player.play("Gallop")
 			
 		State.IDLE:
