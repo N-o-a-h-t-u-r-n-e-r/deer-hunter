@@ -156,6 +156,10 @@ func shoot():
 			var animal = collider.get_node("deer")
 			body.disabled = true
 			animal.change_state(animal.State.DEAD)
+			$"../../../../MusicFMOD".set_parameter("DeerAlert", 0)
+			$"../../../../Deer/DeerHitGruntFMOD".play_one_shot()
+			$"../HitmarkerFMOD".play_one_shot()
+			$"../../../../Deer/DeerBreathFMOD".stop()
 		
 	curr_ammo -= 1
 	if(!ShootSoundPlaying):

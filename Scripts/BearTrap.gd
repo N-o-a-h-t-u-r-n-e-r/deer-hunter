@@ -12,6 +12,7 @@ var character : CharacterBody3D
 
 func trigger():
 	animation_player.play("Clamp")
+	$"../FPSCharacter/Player/Progress/BearTrapCaughtStingerFMOD".play()
 	trap_close.play()
 	trap_sting.play()
 	curr_state = State.CLOSED
@@ -31,5 +32,6 @@ func _on_area_3d_body_entered(body: CharacterBody3D) -> void:
 func _on_progress_bar_value_changed(value: float) -> void:
 	if value == 100:	
 		curr_state = State.DEACTIVATED
+		$"../FPSCharacter/Player/Progress/BearTrapCaughtStingerFMOD".stop()
 		character.set_physics_process(true)
 		self.queue_free()
