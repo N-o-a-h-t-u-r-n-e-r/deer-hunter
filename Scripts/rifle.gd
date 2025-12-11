@@ -37,6 +37,8 @@ var curr_ammo : int
 var BoltSoundPlaying : bool = false
 var ShootSoundPlaying : bool = false
 
+var PlayZoom : bool = true
+
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
@@ -104,6 +106,9 @@ func _process(delta: float) -> void:
 	
 	elif(bolting and cooldown <= rate_of_fire * 0.75):
 		move_to_base(offset_hip_pos, delta)
+		if(!PlayZoom):
+				$RifleZoomOut.play_one_shot()
+				PlayZoom = true
 
 	else:
 		#Set crosshair not visisble and move rifle to aim position
@@ -111,6 +116,9 @@ func _process(delta: float) -> void:
 			crosshair.visible = false
 			position = position.move_toward(aim_pos, ads_speed * delta)	
 			cam_offset = ads_cam_rot.y
+			if(PlayZoom):
+				$RifleZoomIn.play_one_shot()
+				PlayZoom = false
 			
 			#Handle shooting input, only called if player is ads
 			if(Input.is_action_just_pressed("shoot")):	
@@ -129,6 +137,9 @@ func _process(delta: float) -> void:
 		
 		else:
 			move_to_base(offset_hip_pos, delta)
+			if(!PlayZoom):
+				$RifleZoomOut.play_one_shot()
+				PlayZoom = true
 
 	rifle_sway(offset_rotation, delta)	
 	mouse_delta = Vector2.ZERO	
