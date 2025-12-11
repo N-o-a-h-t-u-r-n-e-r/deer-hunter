@@ -9,9 +9,18 @@ extends CharacterBody3D
 signal died
 
 func _ready() -> void:
-	pass
+	$DeerBreathingFMOD.play()
 	
 func _physics_process(delta: float) -> void:
+	
+	if(animal.state != animal.State.DEAD):
+		#Calculate Distance between Player and Deer
+		var distance = self.global_position.distance_squared_to($"../../FPSCharacter/Player".global_position)
+		distance = clamp(distance, 0, 100)
+
+		#Use that information to set the distance parameter in the music.
+		$"../../MusicFMOD".set_parameter("DistanceFromDeer", distance)
+	
 	
 	#Add the gravity.
 	if not is_on_floor():
@@ -55,6 +64,14 @@ func align_with_surface():
 func _on_area_3d_body_entered(body: PhysicsBody3D) -> void:
 	if(body == player and animal.state != animal.State.DEAD):
 		animal.change_state(animal.State.FLEE)
+		$"../../MusicFMOD".set_parameter("DeerAlert", 1)
 		
+func footstepSound():
+	$DeerFootstepFMOD.play_one_shot()
+
 func die():
+	#Play DeerGrunt, stop Deer Breathing, and set parameter DeerAlert to 0
+	$DeerGruntFMOD.play_one_shot()
+	$DeerBreathingFMOD.stop()
+	$"../../MusicFMOD".set_parameter("DeerAlert", 0)
 	emit_signal("died")
