@@ -9,3 +9,19 @@ func _on_sin_button_pressed() -> void:
 func _on_quit_button_pressed() -> void:
 	$ButtonClickFMOD.play_one_shot()
 	get_tree().quit()
+
+
+func _on_options_button_pressed() -> void:
+	$ButtonClickFMOD.play_one_shot()
+
+
+func _on_options_button_mouse_entered() -> void:
+	$ButtonHoverFMOD.play_one_shot()
+
+
+func _on_sin_button_mouse_entered() -> void:
+	$ButtonHoverFMOD.play_one_shot()
+
+
+func _on_quit_button_mouse_entered() -> void:
+	$ButtonHoverFMOD.play_one_shot()

@@ -38,6 +38,7 @@ var BoltSoundPlaying : bool = false
 var ShootSoundPlaying : bool = false
 
 var PlayZoom : bool = true
+var PlayToChest : bool = true
 
 
 func _unhandled_input(event):
@@ -103,6 +104,9 @@ func _process(delta: float) -> void:
 	if(coll_ray.is_colliding()):
 		offset_rotation.x = -(rot.z + 1.0 * 85.0)
 		position.z = move_toward(position.z, hip_pos.z + 0.2, weapon_sway_speed * delta)
+		if(PlayToChest):
+			$RifleToChestFMOD.play_one_shot()
+			PlayToChest = false
 	
 	elif(bolting and cooldown <= rate_of_fire * 0.75):
 		move_to_base(offset_hip_pos, delta)
@@ -149,6 +153,8 @@ func move_to_base(offset_hip_pos, delta):
 	crosshair.visible = true
 	position = position.move_toward(offset_hip_pos, ads_speed * delta)
 	cam_offset = ads_cam_rot.y - ads_offset
+	if(!PlayToChest):
+		PlayToChest = true
 
 
 #Handles shooting logic for the rifle including rotation and raycasting
