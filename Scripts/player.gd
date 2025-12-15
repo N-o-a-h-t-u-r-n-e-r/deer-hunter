@@ -24,6 +24,8 @@ var bob_timer = 0.0
 var step_timer = 0.0
 var curr_speed = speed
 
+var Breathing = false
+
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -53,11 +55,16 @@ func _physics_process(delta: float) -> void:
 		
 	if Input.is_action_pressed("sprint"):
 		curr_speed = sprint_speed
-		print("Sprinting")
+		#print("Sprinting")
+		if(!Breathing):
+			$CameraPivot/BreathingFMOD.play()
+			Breathing = true
 		$CameraPivot/BreathingFMOD.set_parameter("IsRunning", 1)
 	else:
 		curr_speed = speed
 		$CameraPivot/BreathingFMOD.set_parameter("IsRunning", 0)
+		if(Breathing):
+			Breathing = false
 		
 	if Input.is_action_pressed("crouch"):
 		$CameraPivot.position.y = -crouch_amount

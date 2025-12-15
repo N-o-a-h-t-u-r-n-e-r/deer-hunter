@@ -10,6 +10,8 @@ extends MultiMeshInstance3D
 @export var collisions : bool = false
 @export var seedy : int = 1
 
+#@export var isTree : bool
+
 var chunk_size : int
 
 
@@ -94,5 +96,12 @@ func _ready() -> void:
 			var inst_xform = multimesh.get_instance_transform(i)
 			static_body.transform = inst_xform
 			add_child(static_body)
+			
+		#if(isTree): #If it is defined as a tree in the inspector, add the tree-rustle event
+			#var event_emmitter = FmodEventEmitter3D.new()
+			#event_emmitter.event_guid = "{519ad086-0cbe-4822-b914-3432ee2506c0}"
+			#event_emmitter.autoplay = true
+			#event_emmitter.auto_release = true
+			#add_child(event_emmitter)
 
 	multimesh.visible_instance_count = instance_count

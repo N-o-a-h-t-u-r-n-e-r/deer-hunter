@@ -6,6 +6,8 @@ extends CharacterBody3D
 @onready var animal: Node3D = $deer
 @onready var hitbox: CollisionShape3D = $Hitbox
 
+var Fleeing : bool = false
+
 signal died
 
 func _ready() -> void:
@@ -13,7 +15,7 @@ func _ready() -> void:
 	
 func _physics_process(delta: float) -> void:
 	
-	if(animal.state != animal.State.DEAD):
+	if(animal.state != animal.State.DEAD && Fleeing):
 		#Calculate Distance between Player and Deer
 		var distance = self.global_position.distance_squared_to($"../../FPSCharacter/Player".global_position)
 		distance = clamp(distance, 0, 100)
@@ -64,6 +66,7 @@ func align_with_surface():
 func _on_area_3d_body_entered(body: PhysicsBody3D) -> void:
 	if(body == player and animal.state != animal.State.DEAD):
 		animal.change_state(animal.State.FLEE)
+		Fleeing = true
 		$"../../MusicFMOD".set_parameter("DeerAlert", 1)
 		
 func footstepSound():
@@ -74,4 +77,5 @@ func die():
 	$DeerGruntFMOD.play_one_shot()
 	$DeerBreathingFMOD.stop()
 	$"../../MusicFMOD".set_parameter("DeerAlert", 0)
+	Fleeing = false
 	emit_signal("died")
