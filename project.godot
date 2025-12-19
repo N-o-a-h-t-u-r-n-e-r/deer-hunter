@@ -15,7 +15,7 @@ General/banks_path="res://addons/fmod/banks/Desktop"
 [application]
 
 config/name="8 Sins"
-run/main_scene="uid://bpkva2khanv6l"
+run/main_scene="uid://db5cv7kcp2bno"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 

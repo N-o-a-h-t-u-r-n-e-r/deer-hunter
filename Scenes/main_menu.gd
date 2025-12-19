@@ -16,12 +16,24 @@ func _on_options_button_pressed() -> void:
 
 
 func _on_options_button_mouse_entered() -> void:
-	$ButtonHoverFMOD.play_one_shot()
+	$ButtonHoverFMOD.play()
 
 
 func _on_sin_button_mouse_entered() -> void:
-	$ButtonHoverFMOD.play_one_shot()
+	$ButtonHoverFMOD.play()
 
 
 func _on_quit_button_mouse_entered() -> void:
-	$ButtonHoverFMOD.play_one_shot()
+	$ButtonHoverFMOD.play()
+
+
+func _on_sin_button_mouse_exited() -> void:
+	$ButtonHoverFMOD.stop()
+
+
+func _on_options_button_mouse_exited() -> void:
+	$ButtonHoverFMOD.stop()
+
+
+func _on_quit_button_mouse_exited() -> void:
+	$ButtonHoverFMOD.stop()
