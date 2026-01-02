@@ -459,7 +459,7 @@ use_hdr_2d = true
 scaling_3d_mode = 0
 
 [node name="CamContainer" type="Node3D" parent="FPSCharacter/Player/CameraPivot/Rifle/SubViewport"]
-transform = Transform3D(-6.55756e-09, 0, 0.15002, 0, 0.15, 0, -0.15002, 0, -6.55756e-09, -1.83443, 1.4547, -1.92906)
+transform = Transform3D(-6.557563e-09, 0, 0.15001951, 0, 0.15, 0, -0.15001951, 0, -6.557563e-09, -1.8344284, 1.454698, -1.9290634)
 
 [node name="ADSCamera" type="Camera3D" parent="FPSCharacter/Player/CameraPivot/Rifle/SubViewport/CamContainer"]
 transform = Transform3D(-1.45686e-07, 0, -3.3329, 0, 3.33334, 0, 3.3329, 0, -1.45686e-07, 0.549376, 0.00987625, 0)

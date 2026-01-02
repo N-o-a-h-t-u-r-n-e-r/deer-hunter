@@ -34,6 +34,12 @@ var bullet_rot
 var mouse_delta := Vector2.ZERO
 var curr_ammo : int
 
+var BoltSoundPlaying : bool = false
+var ShootSoundPlaying : bool = false
+
+var PlayZoom : bool = true
+#var PlayToChest : bool = true
+
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
@@ -67,8 +73,9 @@ func _process(delta: float) -> void:
 		position.y = move_toward(position.y, hip_pos.y - 0.2, delta * weapon_sway_speed)
 	
 	if((cooldown <= rate_of_fire * 0.3) and bolting):
-		if(!$RifleBolt.playing):
-			$RifleBolt.play()
+		if(!BoltSoundPlaying):
+			BoltSoundPlaying = true
+			$RifleBoltFMOD.play()
 			
 	if((cooldown <= rate_of_fire * 0.2) and bolting):
 		
@@ -97,9 +104,15 @@ func _process(delta: float) -> void:
 	if(coll_ray.is_colliding()):
 		offset_rotation.x = -(rot.z + 1.0 * 85.0)
 		position.z = move_toward(position.z, hip_pos.z + 0.2, weapon_sway_speed * delta)
+		#if(PlayToChest):
+			#$RifleToChestFMOD.play_one_shot()
+			#PlayToChest = false
 	
 	elif(bolting and cooldown <= rate_of_fire * 0.75):
 		move_to_base(offset_hip_pos, delta)
+		if(!PlayZoom):
+				$RifleZoomOut.play_one_shot()
+				PlayZoom = true
 
 	else:
 		#Set crosshair not visisble and move rifle to aim position
@@ -107,6 +120,9 @@ func _process(delta: float) -> void:
 			crosshair.visible = false
 			position = position.move_toward(aim_pos, ads_speed * delta)	
 			cam_offset = ads_cam_rot.y
+			if(PlayZoom):
+				$RifleZoomIn.play_one_shot()
+				PlayZoom = false
 			
 			#Handle shooting input, only called if player is ads
 			if(Input.is_action_just_pressed("shoot")):	
@@ -120,11 +136,14 @@ func _process(delta: float) -> void:
 					
 		elif(Input.is_action_just_pressed("reload") and !bolting and !reloading and curr_ammo != 6):
 			reloading = true
-			$RifleReload.play()
+			$ReloadFMOD.play_one_shot()
 			
 		
 		else:
 			move_to_base(offset_hip_pos, delta)
+			if(!PlayZoom):
+				$RifleZoomOut.play_one_shot()
+				PlayZoom = true
 
 	rifle_sway(offset_rotation, delta)	
 	mouse_delta = Vector2.ZERO	
@@ -134,6 +153,8 @@ func move_to_base(offset_hip_pos, delta):
 	crosshair.visible = true
 	position = position.move_toward(offset_hip_pos, ads_speed * delta)
 	cam_offset = ads_cam_rot.y - ads_offset
+	#if(!PlayToChest):
+		#PlayToChest = true
 
 
 #Handles shooting logic for the rifle including rotation and raycasting
@@ -149,11 +170,13 @@ func shoot():
 			var animal = collider.get_node("deer")
 			body.disabled = true
 			animal.change_state(animal.State.DEAD)
+			#play hitmarker oneshot, all else handeled in deer script.
+			$HitMarkerFMOD.play_one_shot()
 			collider.die()
 		
 	curr_ammo -= 1
-	if(!$RifleShoot.playing):
-		$RifleShoot.play()
+	if(!ShootSoundPlaying):
+		$ShootFMOD.play()
 	bolting = true
 		
 		
@@ -168,3 +191,10 @@ func rifle_sway(offset_rotation, delta):
 	
 func update_GUI():
 	$AmmoDisplay.text = (str(curr_ammo) + " / " + str(total_ammo))
+	
+func _on_rifle_bolt_fmod_stopped() -> void:
+	BoltSoundPlaying = false
+
+
+func _on_shoot_fmod_stopped() -> void:
+	ShootSoundPlaying = false

@@ -1,5 +1,6 @@
 extends CharacterBody3D
 
+
 #Exports
 @export var speed = 5.0
 @export var sprint_speed = 2.0
@@ -23,6 +24,8 @@ var bob_timer = 0.0
 var step_timer = 0.0
 var curr_speed = speed
 
+var Breathing = false
+
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -31,9 +34,12 @@ func _process(delta: float) -> void:
 	progress_bar.value -= 20 * delta
 	
 	if Input.is_action_just_pressed("action"):
-		progress_bar.value += 10 
+		if(progress_bar.visible):
+			progress_bar.value += 10 
+			$Progress/BearTrapEscapeFMOD.play_one_shot()
 		
 	if progress_bar.value == 100:
+		$Progress/BearTrapOpenFMOD.play_one_shot()
 		progress_bar.visible = false
 
 func _physics_process(delta: float) -> void:
@@ -49,8 +55,16 @@ func _physics_process(delta: float) -> void:
 		
 	if Input.is_action_pressed("sprint"):
 		curr_speed = sprint_speed
+		#print("Sprinting")
+		if(!Breathing):
+			$CameraPivot/BreathingFMOD.play()
+			Breathing = true
+		$CameraPivot/BreathingFMOD.set_parameter("IsRunning", 1)
 	else:
 		curr_speed = speed
+		$CameraPivot/BreathingFMOD.set_parameter("IsRunning", 0)
+		if(Breathing):
+			Breathing = false
 		
 	if Input.is_action_pressed("crouch"):
 		$CameraPivot.position.y = -crouch_amount
@@ -81,8 +95,9 @@ func _physics_process(delta: float) -> void:
 	
 	
 	if(step_timer >= 3.0):
-		$CameraPivot/FootstepGrass.pitch_scale = randf_range(0.8, 1.2)
-		$CameraPivot/FootstepGrass.play()
+		#$CameraPivot/FootstepGrass.pitch_scale = randf_range(0.8, 1.2)
+		#$CameraPivot/FootstepGrass.play()
+		$CameraPivot/FootstepFMOD.play_one_shot()
 		step_timer = 0.0
 	
 	move_and_slide()
