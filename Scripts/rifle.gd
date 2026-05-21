@@ -166,9 +166,9 @@ func shoot():
 	if((hit_range.is_colliding())):
 		var collider = hit_range.get_collider()
 		if(collider.is_in_group("Animal")):
-			var body = collider.get_node("Hitbox") as CollisionShape3D
-			var animal = collider.get_node("deer")
-			body.disabled = true
+			
+			var animal = collider.get_node("model")
+
 			animal.change_state(animal.State.DEAD)
 			#play hitmarker oneshot, all else handeled in deer script.
 			$HitMarkerFMOD.play_one_shot()

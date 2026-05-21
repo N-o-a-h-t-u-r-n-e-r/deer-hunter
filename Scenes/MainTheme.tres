@@ -1,7 +1,7 @@
-[gd_resource type="Theme" load_steps=4 format=3 uid="uid://pycx8tisr5mq"]
+[gd_resource type="Theme" format=3 uid="uid://pycx8tisr5mq"]
 
-[ext_resource type="StyleBox" uid="uid://ctu524pc5wlwj" path="res://Scenes/WoodButtonHover.tres" id="1_yxpi2"]
-[ext_resource type="StyleBox" uid="uid://6ccsss7rfn03" path="res://Scenes/WoodButtonNormal.tres" id="2_f17vk"]
+[ext_resource type="StyleBox" uid="uid://ctu524pc5wlwj" path="res://Materials/WoodButtonHover.tres" id="1_yxpi2"]
+[ext_resource type="StyleBox" uid="uid://6ccsss7rfn03" path="res://Materials/WoodButtonNormal.tres" id="2_f17vk"]
 [ext_resource type="FontFile" uid="uid://03sgifrxayrd" path="res://PressStart2P-Regular.ttf" id="3_2q3ya"]
 
 [resource]

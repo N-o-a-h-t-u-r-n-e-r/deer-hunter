@@ -1,7 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://clyx4jv2318tq"]
+[gd_scene format=3 uid="uid://clyx4jv2318tq"]
 
 [ext_resource type="Shader" uid="uid://di1q1c0bp34iq" path="res://Shaders/DayNightCycle.gdshader" id="1_icp1e"]
-[ext_resource type="Script" uid="uid://bs1jxw3fy1qhh" path="res://Scenes/DayNightCycle.gd" id="2_nbbcb"]
+[ext_resource type="Script" uid="uid://bs1jxw3fy1qhh" path="res://Scripts/DayNightCycle.gd" id="2_nbbcb"]
 
 [sub_resource type="Gradient" id="Gradient_kvqn8"]
 offsets = PackedFloat32Array(0.392491, 1)

@@ -1,6 +1,6 @@
-[gd_scene load_steps=11 format=4 uid="uid://dsnxai8jls0bm"]
+[gd_scene format=4 uid="uid://dsnxai8jls0bm"]
 
-[ext_resource type="Script" uid="uid://d4c6dsvn06202" path="res://RotateIcon.gd" id="1_plg0f"]
+[ext_resource type="Script" uid="uid://d4c6dsvn06202" path="res://Scripts/RotateIcon.gd" id="1_plg0f"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6hxdr"]
 resource_name = "Material.001"
@@ -257,33 +257,33 @@ bind/37/name = &"FF.R"
 bind/37/bone = -1
 bind/37/pose = Transform3D(-1, -5.07272e-07, -1.43053e-06, 7.29097e-09, -0.944092, 0.329683, -1.51779e-06, 0.329683, 0.944092, -0.374137, -0.273505, -1.13083)
 
-[node name="Node3D" type="Node3D"]
+[node name="Node3D" type="Node3D" unique_id=1956857684]
 
-[node name="IconRender" type="SubViewport" parent="."]
+[node name="IconRender" type="SubViewport" parent="." unique_id=710248934]
 transparent_bg = true
 size = Vector2i(128, 128)
 
-[node name="Node3D" type="Node3D" parent="IconRender"]
+[node name="Node3D" type="Node3D" parent="IconRender" unique_id=895933037]
 
-[node name="Camera3D" type="Camera3D" parent="IconRender/Node3D"]
+[node name="Camera3D" type="Camera3D" parent="IconRender/Node3D" unique_id=908094719]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 6.89533, 2.40658, 0.356303)
 projection = 1
 size = 6.05
 
-[node name="Stag2" type="Node3D" parent="IconRender/Node3D"]
+[node name="Stag2" type="Node3D" parent="IconRender/Node3D" unique_id=310902567]
 transform = Transform3D(4.535, 0, 0, 0, 4.535, 0, 0, 0, 4.535, 0, 0.884464, 0)
 script = ExtResource("1_plg0f")
 
-[node name="Stag_Horns" type="MeshInstance3D" parent="IconRender/Node3D/Stag2"]
+[node name="Stag_Horns" type="MeshInstance3D" parent="IconRender/Node3D/Stag2" unique_id=1937604992]
 transform = Transform3D(0.196, -3.85044e-11, -2.90788e-12, 3.73902e-11, 0.196, -8.17776e-08, 3.30897e-12, 6.42538e-08, 0.196, -0.001029, 0.577649, 0.456366)
 mesh = SubResource("ArrayMesh_o8s2x")
 skeleton = NodePath("")
 
-[node name="Stag" type="MeshInstance3D" parent="IconRender/Node3D/Stag2"]
+[node name="Stag" type="MeshInstance3D" parent="IconRender/Node3D/Stag2" unique_id=1778823768]
 transform = Transform3D(0.196, 0, 0, 0, 0.196, 0, 0, 0, 0.196, 0, -0.201872, 0)
 mesh = SubResource("ArrayMesh_qfh5x")
 skin = SubResource("Skin_f0jv7")
 skeleton = NodePath("")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="IconRender/Node3D"]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="IconRender/Node3D" unique_id=1574725453]
 transform = Transform3D(0.914798, -0.297452, 0.273253, 0, 0.676516, 0.736428, -0.403913, -0.673682, 0.618875, 0, 0, 0)

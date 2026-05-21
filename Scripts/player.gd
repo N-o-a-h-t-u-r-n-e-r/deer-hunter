@@ -17,9 +17,13 @@ const FRICTION = 1.0
 #Global Variables
 var vertical_rotation = 0.0
 @onready var cam : Camera3D = $CameraPivot/Camera3D
-@onready var cam_pos = cam.position
+@onready var cam_pos = cam.position	
 @onready var stand_pos: Vector3 = $CameraPivot.position
 @onready var progress_bar: ProgressBar = $Progress/ProgressBar
+@onready var object_detection:RayCast3D = $CameraPivot/ObjectDetection
+@onready var outline_node:Control = $CameraPivot/Outline
+@onready var pickup_label:Label = $PlayerUI/Control/PickupLabel
+
 var bob_timer = 0.0
 var step_timer = 0.0
 var curr_speed = speed
@@ -41,6 +45,18 @@ func _process(delta: float) -> void:
 	if progress_bar.value == 100:
 		$Progress/BearTrapOpenFMOD.play_one_shot()
 		progress_bar.visible = false
+		
+	if object_detection.is_colliding():
+
+		var curr_obj = object_detection.get_collider()
+
+		if curr_obj.is_in_group("Animal"):
+			outline_node.visible=true
+			pickup_label.visible=true
+			
+	else:
+		outline_node.visible=false
+		pickup_label.visible=false
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.

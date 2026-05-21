@@ -11,12 +11,14 @@ uniform float metallic  : hint_range(0.0, 1.0, 0.01) = 0.0;
 uniform float grid_size = 200.0;
 
 void vertex() {
+	
     vec4 view_pos = MODELVIEW_MATRIX * vec4(VERTEX, 1.0);
     vec4 clip_pos = PROJECTION_MATRIX * view_pos;
     float gridCount = grid_size;
     vec2 ndc = clip_pos.xy / clip_pos.w;
     ndc = floor((ndc * 0.5 + 0.5) * gridCount) / gridCount * 2.0 - 1.0;
     POSITION = vec4(ndc * clip_pos.w, clip_pos.zw);
+	
 }
 
 void fragment() {

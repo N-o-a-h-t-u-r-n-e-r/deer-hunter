@@ -6,6 +6,8 @@ var state
 var timer: float
 
 @export var animal: CharacterBody3D 
+@export var run_animation: String
+@export var death_animation:String
 @onready var navigation_agent: NavigationAgent3D = get_node("../NavigationAgent3D")
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
@@ -30,7 +32,7 @@ func _physics_process(delta: float) -> void:
 		State.IDLE: _idle_state()
 		State.WALK: _walk_state()
 		State.FLEE: _flee_state()
-		State.DEAD: pass
+		State.DEAD: _dead_state()
 		
 	
 	if(timer <= 0):
@@ -51,15 +53,15 @@ func change_state(s):
 		State.FLEE:
 			set_movement_target(500.0)
 			animation_player.speed_scale = 1.3
-			animation_player.play("Gallop")
+			animation_player.play(run_animation)
 			
 		State.IDLE:
 			animation_player.speed_scale = 1.2
 			animation_player.play("Idle")
 			
 		State.DEAD:
-			print("dead")
-			animation_player.play("Death")
+
+			animation_player.play(death_animation)
 
 	
 	state = s
@@ -80,6 +82,9 @@ func _flee_state():
 	var next_path_position: Vector3 = navigation_agent.get_next_path_position()
 
 	animal.velocity = current_animal_position.direction_to(next_path_position) * animal.run_speed
+	
+func _dead_state():
+	animal.velocity = Vector3.ZERO
 	
 func actor_setup():
 	# Wait for the first physics frame so the NavigationServer can sync.

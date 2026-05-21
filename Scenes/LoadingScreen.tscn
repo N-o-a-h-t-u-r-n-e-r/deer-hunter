@@ -1,7 +1,7 @@
-[gd_scene load_steps=25 format=4 uid="uid://cgkrlasnq1blg"]
+[gd_scene format=4 uid="uid://cgkrlasnq1blg"]
 
-[ext_resource type="Script" uid="uid://dqc6nqbdpjkqo" path="res://Scenes/loading_screen.gd" id="1_m6rkq"]
-[ext_resource type="Script" uid="uid://d4c6dsvn06202" path="res://RotateIcon.gd" id="1_xoop3"]
+[ext_resource type="Script" uid="uid://dqc6nqbdpjkqo" path="res://Scripts/loading_screen.gd" id="1_m6rkq"]
+[ext_resource type="Script" uid="uid://d4c6dsvn06202" path="res://Scripts/RotateIcon.gd" id="1_xoop3"]
 [ext_resource type="Shader" uid="uid://dlwn7uddrxewl" path="res://Shaders/Wobble.gdshader" id="2_m6rkq"]
 [ext_resource type="Texture2D" uid="uid://dxa63x7x7xo6g" path="res://Textures/splash_screen.png" id="2_qjj4j"]
 [ext_resource type="Theme" uid="uid://pycx8tisr5mq" path="res://Scenes/MainTheme.tres" id="3_dq85b"]
