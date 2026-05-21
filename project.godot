@@ -42,6 +42,20 @@ window/vsync/vsync_mode=0
 
 enabled=PackedStringArray("res://addons/fmod/plugin.cfg")
 
+[file_customization]
+
+folder_colors={
+"res://Animations/": "red",
+"res://Materials/": "orange",
+"res://Models/": "yellow",
+"res://Scenes/": "green",
+"res://Scripts/": "teal",
+"res://Shaders/": "blue",
+"res://Sounds/": "purple",
+"res://Terrain/": "pink",
+"res://Textures/": "gray"
+}
+
 [global_group]
 
 Animal=""

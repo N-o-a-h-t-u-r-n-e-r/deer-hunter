@@ -3,6 +3,8 @@ extends CharacterBody3D
 @export var walk_speed: float = 1.0
 @export var run_speed: float = 4.0
 @export var player: CharacterBody3D
+@export var animal_name: String
+@export var outline_models: Array[MeshInstance3D]
 @onready var animal_model: Node3D = $model
 @onready var hitbox: CollisionShape3D = $Hitbox
 @onready var is_dead: bool = false
@@ -64,14 +66,22 @@ func align_with_surface():
 	global_basis = basis_new
 
 func _on_area_3d_body_entered(body: PhysicsBody3D) -> void:
+
 	if(body == player and animal_model.state != animal_model.State.DEAD):
 		animal_model.change_state(animal_model.State.FLEE)
 		Fleeing = true
-		print("enter")
 		#$"../../MusicFMOD".set_parameter("DeerAlert", 1)
+	if(body == player and animal_model.state == animal_model.State.DEAD):
+		for outline_mesh in outline_models:
+			outline_mesh.visible = true
 		
 #func footstepSound():
 	#$DeerFootstepFMOD.play_one_shot()
+
+func _on_area_3d_body_exited(body: PhysicsBody3D) -> void:
+	if(body == player and animal_model.state == animal_model.State.DEAD):
+		for outline_mesh in outline_models:
+			outline_mesh.visible = false
 
 func die():
 	#Play DeerGrunt, stop Deer Breathing, and set parameter DeerAlert to 0

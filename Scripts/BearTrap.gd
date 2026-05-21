@@ -12,7 +12,7 @@ var character : CharacterBody3D
 
 func trigger():
 	animation_player.play("Clamp")
-	$"../FPSCharacter/Player/Progress/BearTrapCaughtStingerFMOD".play()
+	$"../Player/Progress/BearTrapCaughtStingerFMOD".play()
 	trap_close.play()
 	trap_sting.play()
 	curr_state = State.CLOSED

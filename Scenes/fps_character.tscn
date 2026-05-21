@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://d4c6dsvn06202" path="res://Scripts/RotateIcon.gd" id="16_f3sc5"]
 [ext_resource type="Texture2D" uid="uid://bti07pjaewhlv" path="res://Models/Stag_deer.png" id="17_xfjlp"]
 [ext_resource type="ArrayMesh" uid="uid://cdxo6n30x0wp1" path="res://Materials/bunny.res" id="18_007wr"]
+[ext_resource type="Script" uid="uid://hdh6d38qqehs" path="res://Scenes/inventory.gd" id="18_dgqjq"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0rwas"]
 radius = 0.484853
@@ -491,7 +492,7 @@ bind/15/bone = -1
 bind/15/pose = Transform3D(0.6601141, 0.720302, 0.21310714, -5.9604638e-08, -0.28370202, 0.9589124, 0.7511653, -0.6329916, -0.1872757, 0.6734441, 0.26873228, -0.19242492)
 
 [node name="Player" type="CharacterBody3D" unique_id=1361936383 groups=["Player"]]
-transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, 0, 0, 0)
 collision_mask = 15
 script = ExtResource("3_5r2x0")
 speed = 1.0
@@ -581,6 +582,10 @@ event_name = "event:/SFX/Player/Footsteps"
 event_guid = "{cddbaf20-894e-43df-a896-18346b9c5353}"
 transform = Transform3D(0.9999998, 0, 0, 0, 0.9999998, 0, 0, 0, 0.9999998, 0, 0, 0)
 
+[node name="ItemPickupFMOD" type="FmodEventEmitter3D" parent="CameraPivot" unique_id=1605571408]
+event_name = "event:/SFX/Player/Interactions/ItemPickup"
+event_guid = "{586b4905-220e-498e-968c-ec2aa3c491ab}"
+
 [node name="CollDet" type="RayCast3D" parent="CameraPivot" unique_id=1371821771]
 transform = Transform3D(9.55342e-16, 2.18557e-08, 0.5, 0.5, -2.18557e-08, 0, 2.18557e-08, 0.5, -2.18557e-08, 0.643451, -0.178574, -0.770325)
 target_position = Vector3(0, -3.065, 0)
@@ -616,7 +621,7 @@ scaling_3d_mode = 0
 anisotropic_filtering_level = 0
 
 [node name="CamContainer" type="Node3D" parent="CameraPivot/Rifle/SubViewport" unique_id=1764785907]
-transform = Transform3D(-5.4646354e-09, 0, 0.12501626, 0, 0.125, 0, -0.12501626, 0, -5.4646354e-09, 0.160543, -0.00881005, -0.2205195)
+transform = Transform3D(-7.650489e-09, 0, 0.17502275, 0, 0.175, 0, -0.17502275, 0, -7.650489e-09, 0.22476019, -0.012334069, -0.3087273)
 
 [node name="ADSCamera" type="Camera3D" parent="CameraPivot/Rifle/SubViewport/CamContainer" unique_id=790123559]
 transform = Transform3D(-1.45686e-07, 0, -3.3329, 0, 3.33334, 0, 3.3329, 0, -1.45686e-07, 0.549376, 0.00987625, 0)
@@ -710,7 +715,7 @@ scaling_3d_mode = 0
 size = Vector2i(1920, 1080)
 
 [node name="MaskContainer" type="Node3D" parent="CameraPivot/MaskViewport" unique_id=873630219]
-transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, 0, 0, 0)
 
 [node name="MaskCamera" type="Camera3D" parent="CameraPivot/MaskViewport/MaskContainer" unique_id=947388712]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0.358, 0)
@@ -853,7 +858,7 @@ current = true
 size = 5.486
 
 [node name="DeerModel" type="Node3D" parent="PlayerUI/DeerIcon/IconRender/Node3D" unique_id=978193510]
-transform = Transform3D(-0.123346664, 0, 0.97153944, 0, 1, 0, -0.97153944, 0, -0.123346664, 0.6228008, 0, 0.36164147)
+transform = Transform3D(-0.8880682, 0, -0.4093183, 0, 1, 0, 0.4093183, 0, -0.8880682, 0.6228008, 0, 0.36164147)
 script = ExtResource("16_f3sc5")
 
 [node name="Stag" type="MeshInstance3D" parent="PlayerUI/DeerIcon/IconRender/Node3D/DeerModel" unique_id=1163783577]
@@ -893,7 +898,7 @@ current = true
 size = 10.406
 
 [node name="BunnyModel" type="Node3D" parent="PlayerUI/BunnyIcon/IconRender/Node3D" unique_id=1163097200]
-transform = Transform3D(-1.0839407, 0, -4.155461, 0, 4.535, 0, 4.155461, 0, -1.0839407, 0, 0.884464, -2.558463)
+transform = Transform3D(4.282552, 0, 0.21618842, 0, 4.535, 0, -0.21618842, 0, 4.282552, 0, 0.884464, -2.558463)
 script = ExtResource("16_f3sc5")
 
 [node name="Rabbit" type="Node3D" parent="PlayerUI/BunnyIcon/IconRender/Node3D/BunnyModel" unique_id=613792606]
@@ -1018,6 +1023,9 @@ bones/15/scale = Vector3(1, 1.0000001, 1.0000001)
 layers = 262144
 mesh = ExtResource("18_007wr")
 skin = SubResource("Skin_d650r")
+
+[node name="Inventory" type="Node3D" parent="." unique_id=1895444147]
+script = ExtResource("18_dgqjq")
 
 [connection signal="stopped" from="CameraPivot/Rifle/RifleBoltFMOD" to="CameraPivot/Rifle" method="_on_rifle_bolt_fmod_stopped"]
 [connection signal="stopped" from="CameraPivot/Rifle/ShootFMOD" to="CameraPivot/Rifle" method="_on_shoot_fmod_stopped"]

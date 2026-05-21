@@ -69,6 +69,9 @@ shader_parameter/specular = 0.01
 shader_parameter/metallic = 0.0
 shader_parameter/grid_size = 200.0
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0u1p1"]
+shading_mode = 0
+
 [sub_resource type="Animation" id="Animation_pvnd8"]
 resource_name = "Die"
 length = 0.3
@@ -562,10 +565,12 @@ size = Vector3(0.6535034, 1.41008, 2.1952667)
 height = 0.5759595
 radius = 2.22754
 
-[node name="Rabbit" type="CharacterBody3D" unique_id=1617913331 groups=["Animal"]]
+[node name="Rabbit" type="CharacterBody3D" unique_id=1617913331 node_paths=PackedStringArray("outline_models") groups=["Animal"]]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 collision_mask = 15
 script = ExtResource("1_hae7q")
+animal_name = "Bunny"
+outline_models = [NodePath("model/Armature/Skeleton3D/Body2")]
 
 [node name="model" type="Node3D" parent="." unique_id=111429832 node_paths=PackedStringArray("animal") groups=["Animal"]]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
@@ -695,6 +700,13 @@ mesh = ExtResource("2_suujd")
 skin = SubResource("Skin_28ob1")
 surface_material_override/0 = SubResource("ShaderMaterial_eqkc2")
 
+[node name="Body2" type="MeshInstance3D" parent="model/Armature/Skeleton3D" unique_id=849455005]
+visible = false
+layers = 524288
+mesh = ExtResource("2_suujd")
+skin = SubResource("Skin_28ob1")
+surface_material_override/0 = SubResource("StandardMaterial3D_0u1p1")
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="model" unique_id=2058216324]
 libraries/ = SubResource("AnimationLibrary_6nkly")
 speed_scale = 0.342
@@ -721,3 +733,4 @@ transform = Transform3D(1, 0, 0, 0, 1, -8.4703295e-22, 0, 8.4703295e-22, 1, 0, 0
 shape = SubResource("CylinderShape3D_suujd")
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

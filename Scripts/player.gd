@@ -23,7 +23,7 @@ var vertical_rotation = 0.0
 @onready var object_detection:RayCast3D = $CameraPivot/ObjectDetection
 @onready var outline_node:Control = $CameraPivot/Outline
 @onready var pickup_label:Label = $PlayerUI/Control/PickupLabel
-
+@onready var inventory:Dictionary = $Inventory.inventory
 var bob_timer = 0.0
 var step_timer = 0.0
 var curr_speed = speed
@@ -47,16 +47,25 @@ func _process(delta: float) -> void:
 		progress_bar.visible = false
 		
 	if object_detection.is_colliding():
-
 		var curr_obj = object_detection.get_collider()
 
-		if curr_obj.is_in_group("Animal"):
-			outline_node.visible=true
-			pickup_label.visible=true
-			
+		if is_instance_valid(curr_obj) and curr_obj.is_in_group("Animal"):
+			outline_node.visible = true
+			pickup_label.visible = true
+
+			if Input.is_action_just_pressed("action"):
+				if not inventory.has(curr_obj.animal_name):
+					inventory[curr_obj.animal_name] = 0
+
+				inventory[curr_obj.animal_name] += 1
+				curr_obj.queue_free()
+				outline_node.visible = false
+				pickup_label.visible = false
+				$CameraPivot/ItemPickupFMOD.play_one_shot()
 	else:
-		outline_node.visible=false
-		pickup_label.visible=false
+		outline_node.visible = false
+		pickup_label.visible = false
+
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.

@@ -45,6 +45,9 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_epa4w")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xlm88"]
+shading_mode = 0
+
 [sub_resource type="ArrayMesh" id="ArrayMesh_ju0le"]
 resource_name = "Stag_Cube"
 _surfaces = [{
@@ -182,6 +185,9 @@ bind/36/pose = Transform3D(1, 2.3926899e-07, 6.0616907e-07, 0, -0.93015957, 0.36
 bind/37/name = &"FF.R"
 bind/37/bone = -1
 bind/37/pose = Transform3D(-1, -5.0727164e-07, -1.4305282e-06, 7.290966e-09, -0.9440921, 0.3296826, -1.5177885e-06, 0.32968253, 0.94409186, -0.3741369, -0.2735048, -1.1308308)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dtxri"]
+shading_mode = 0
 
 [sub_resource type="Animation" id="Animation_klswn"]
 resource_name = "Attack_Headbutt"
@@ -4082,9 +4088,11 @@ radius = 2.22754
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_by0so"]
 points = PackedVector3Array(-0.435707, 0.00970346, -1.58143, -0.470162, 0.325359, -1.75095, -0.423791, 0.341326, -1.77084, 0.435564, 0.00970346, -1.58143, -0.509354, 0.00970346, -1.54639, -0.493849, 0.372032, -1.68608, -0.533041, 1.18676, -1.68987, -0.532611, 1.38246, -1.69271, -0.417331, 1.41849, -1.79688, -0.258553, 1.42217, -1.80162, 0.423648, 0.341326, -1.77084, 0.50921, 0.00970346, -1.54639, 0.470018, 0.325359, -1.75095, -0.530601, 0.00970346, -1.47347, -0.55515, 1.17898, -1.61695, -0.667845, 2.69503, -1.29116, -0.000143528, 2.80066, -1.74148, -0.000143528, 2.58531, -1.75427, -0.396659, 2.81622, -1.50898, -0.286834, 2.88049, -1.57007, 0.25841, 1.42217, -1.80162, 0.417188, 1.41849, -1.79688, 0.530457, 0.00970346, -1.47347, 0.493706, 0.372032, -1.68608, 0.532467, 1.38246, -1.69271, 0.532898, 1.18676, -1.68987, -0.681914, 2.29708, -0.873044, -0.668419, 2.40926, -1.27033, -0.480211, 0.00970346, 1.23507, -0.535051, 2.90342, -1.33709, -0.693112, 2.70649, -0.852683, -0.733309, 4.16932, 2.03343, -0.0657508, 2.92512, -1.67708, -0.000143528, 2.95869, -1.68513, 0.0656073, 2.92512, -1.67708, 0.286691, 2.88049, -1.57007, -0.398668, 3.04098, -1.39202, 0.396515, 2.81622, -1.50898, 0.667701, 2.69503, -1.29116, 0.555006, 1.17898, -1.61695, 0.668276, 2.40926, -1.27033, 0.68177, 2.29708, -0.873044, 0.480067, 0.00970346, 1.23507, -0.257117, 0.00970346, 1.23791, -0.355887, 0.014207, 1.39749, -0.441593, 0.0146164, 1.33972, -0.155046, 3.48888, 2.97526, -0.145858, 3.55397, 2.99562, -0.716225, 4.18774, 2.0481, -0.2419, 3.13433, -1.37971, -0.000143528, 3.1765, -1.31579, 0.241756, 3.13433, -1.37971, 0.398525, 3.04098, -1.39202, 0.534908, 2.90342, -1.33709, 0.692968, 2.70649, -0.852683, 0.733309, 4.16932, 2.03343, 0.44145, 0.0146164, 1.33972, 0.355744, 0.014207, 1.39749, 0.256974, 0.00970346, 1.23791, 0, 3.46554, 3.02877, -0.0664687, 3.46923, 3.01788, -0.0658944, 3.55275, 3.0354, -0.328324, 3.99245, 2.47759, -0.680622, 4.19225, 2.02585, -0.2274, 4.01333, 2.49748, -0.258122, 4.10832, 2.30286, 0, 4.13943, 2.2896, -0.252667, 3.30423, -0.886303, -0.000143528, 3.34231, -0.893879, 0.252523, 3.30423, -0.886303, 0.680478, 4.19225, 2.02585, 0.716081, 4.18774, 2.0481, 0.145714, 3.55397, 2.99562, 0.154902, 3.48888, 2.97526, 0.0663251, 3.46923, 3.01788, 0.0657509, 3.55275, 3.0354, 0, 3.56298, 3.03113, 0, 4.02193, 2.4899, 0.227257, 4.01333, 2.49748, 0.257979, 4.10832, 2.30286, 0.32818, 3.99245, 2.47759)
 
-[node name="Stag" type="CharacterBody3D" unique_id=136548191 groups=["Animal"]]
+[node name="Stag" type="CharacterBody3D" unique_id=136548191 node_paths=PackedStringArray("outline_models") groups=["Animal"]]
 collision_mask = 15
 script = ExtResource("1_dtxri")
+animal_name = "Deer"
+outline_models = [NodePath("model/AnimalArmature/Skeleton3D/OutlineMesh"), NodePath("model/AnimalArmature/Skeleton3D/Head/OutlineHorns")]
 
 [node name="model" type="Node3D" parent="." unique_id=1320974888 node_paths=PackedStringArray("animal")]
 transform = Transform3D(0.275, 0, 0, 0, 0.275, 0, 0, 0, 0.275, 0, -0.277313, 0)
@@ -4373,20 +4381,24 @@ transform = Transform3D(-1, 1.4683922e-06, 5.873674e-07, 6.82121e-13, -0.3713961
 mesh = SubResource("ArrayMesh_vjeqn")
 skeleton = NodePath("")
 
-[node name="Stag_Horns2" type="MeshInstance3D" parent="model/AnimalArmature/Skeleton3D/Head" unique_id=2000720201]
-transform = Transform3D(-1, 1.4683922e-06, 5.873674e-07, 6.82121e-13, -0.3713961, 0.9284748, 1.5815103e-06, 0.9284747, 0.37139615, 0.0052503706, 0.0926885, 0.23700826)
+[node name="OutlineHorns" type="MeshInstance3D" parent="model/AnimalArmature/Skeleton3D/Head" unique_id=2000720201]
+transform = Transform3D(-1, 1.4683922e-06, 5.873674e-07, 6.353117e-13, -0.37139612, 0.92847484, 1.5815104e-06, 0.9284747, 0.37139615, 0.005250371, 0.09268856, 0.2370081)
+visible = false
 layers = 524288
 mesh = SubResource("ArrayMesh_vjeqn")
 skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_xlm88")
 
 [node name="Stag" type="MeshInstance3D" parent="model/AnimalArmature/Skeleton3D" unique_id=1052715717]
 mesh = SubResource("ArrayMesh_ju0le")
 skin = SubResource("Skin_b371f")
 
-[node name="Stag2" type="MeshInstance3D" parent="model/AnimalArmature/Skeleton3D" unique_id=1391099328]
+[node name="OutlineMesh" type="MeshInstance3D" parent="model/AnimalArmature/Skeleton3D" unique_id=1391099328]
+visible = false
 layers = 524288
 mesh = SubResource("ArrayMesh_ju0le")
 skin = SubResource("Skin_b371f")
+surface_material_override/0 = SubResource("StandardMaterial3D_dtxri")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="model" unique_id=605562592]
 libraries/ = SubResource("AnimationLibrary_j8s1n")
@@ -4426,3 +4438,4 @@ event_name = "event:/SFX/Deer/DeerFootsteps"
 event_guid = "{f5f98152-542d-4967-b093-5882581e7a98}"
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]
