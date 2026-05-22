@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://dp5gn3p8yciw3"]
+
+[ext_resource type="Texture2D" uid="uid://d3up617u0w0ok" path="res://Textures/2D_Mag.png" id="1_1ccok"]
+[ext_resource type="Texture2D" uid="uid://cdrhwiwbsedxi" path="res://Textures/2d_bullet.png" id="2_rkr5v"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1ccok"]
+size = Vector2(925.45776, 691.2543)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mqul3"]
+size = Vector2(95.886536, 14.468086)
+
+[node name="ReloadUI" type="Node2D" unique_id=1714583255]
+
+[node name="Background" type="ColorRect" parent="." unique_id=1956298637]
+offset_left = -2.0
+offset_top = 3.0
+offset_right = 1918.0
+offset_bottom = 1083.0
+color = Color(0.20511743, 0.20511743, 0.20511743, 0.27058825)
+
+[node name="Magazine" type="Sprite2D" parent="." unique_id=1551923695]
+texture_filter = 1
+position = Vector2(941.00006, 800.00006)
+scale = Vector2(0.4552083, 0.37199074)
+texture = ExtResource("1_1ccok")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="Magazine" unique_id=87510660]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Magazine/RigidBody2D" unique_id=480336895]
+visible = false
+position = Vector2(2.1967282, 40.323376)
+scale = Vector2(0.99999976, 0.9999999)
+shape = SubResource("RectangleShape2D_1ccok")
+
+[node name="Bullet" type="Sprite2D" parent="." unique_id=1459101501]
+position = Vector2(938.00006, 575)
+scale = Vector2(3.525, 3.525)
+texture = ExtResource("2_rkr5v")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="Bullet" unique_id=530934145]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bullet/RigidBody2D" unique_id=1974102768]
+visible = false
+position = Vector2(0, -5.5319214)
+shape = SubResource("RectangleShape2D_mqul3")
