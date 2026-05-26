@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://b1t5l3kvbx2c2"]
+
+[ext_resource type="Script" uid="uid://bad4our3tn3vw" path="res://Scripts/ChunkLoader.gd" id="1_hdn13"]
+
+[node name="ChunkLoader" type="Node3D" unique_id=1792014579 node_paths=PackedStringArray("player")]
+script = ExtResource("1_hdn13")
+global_size = 200
+chunk_size = 24
+render_distance = 2
+player = NodePath("")

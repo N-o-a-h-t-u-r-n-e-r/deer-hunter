@@ -17,7 +17,6 @@
 [ext_resource type="Script" uid="uid://d4c6dsvn06202" path="res://Scripts/RotateIcon.gd" id="16_f3sc5"]
 [ext_resource type="Texture2D" uid="uid://bti07pjaewhlv" path="res://Models/Stag_deer.png" id="17_xfjlp"]
 [ext_resource type="ArrayMesh" uid="uid://cdxo6n30x0wp1" path="res://Materials/bunny.res" id="18_007wr"]
-[ext_resource type="Script" uid="uid://hdh6d38qqehs" path="res://Scenes/inventory.gd" id="18_dgqjq"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0rwas"]
 radius = 0.484853
@@ -491,6 +490,21 @@ bind/15/name = &"back_foot.R"
 bind/15/bone = -1
 bind/15/pose = Transform3D(0.6601141, 0.720302, 0.21310714, -5.9604638e-08, -0.28370202, 0.9589124, 0.7511653, -0.6329916, -0.1872757, 0.6734441, 0.26873228, -0.19242492)
 
+[sub_resource type="GDScript" id="GDScript_sb63p"]
+script/source = "extends Node3D
+
+@onready var inventory: Dictionary 
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	inventory = {\"Deer\":0, \"Bunny\":0}
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
+
 [node name="Player" type="CharacterBody3D" unique_id=1361936383 groups=["Player"]]
 transform = Transform3D(0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, 0, 0, 0)
 collision_mask = 15
@@ -858,7 +872,7 @@ current = true
 size = 5.486
 
 [node name="DeerModel" type="Node3D" parent="PlayerUI/DeerIcon/IconRender/Node3D" unique_id=978193510]
-transform = Transform3D(-0.8880682, 0, -0.4093183, 0, 1, 0, 0.4093183, 0, -0.8880682, 0.6228008, 0, 0.36164147)
+transform = Transform3D(-0.8951173, 0, 0.39358065, 0, 1, 0, -0.39358065, 0, -0.8951173, 0.6228008, 0, 0.36164147)
 script = ExtResource("16_f3sc5")
 
 [node name="Stag" type="MeshInstance3D" parent="PlayerUI/DeerIcon/IconRender/Node3D/DeerModel" unique_id=1163783577]
@@ -898,7 +912,7 @@ current = true
 size = 10.406
 
 [node name="BunnyModel" type="Node3D" parent="PlayerUI/BunnyIcon/IconRender/Node3D" unique_id=1163097200]
-transform = Transform3D(4.282552, 0, 0.21618842, 0, 4.535, 0, -0.21618842, 0, 4.282552, 0, 0.884464, -2.558463)
+transform = Transform3D(3.0005605, 0, -3.0630538, 0, 4.535, 0, 3.0630538, 0, 3.0005605, 0, 0.884464, -2.558463)
 script = ExtResource("16_f3sc5")
 
 [node name="Rabbit" type="Node3D" parent="PlayerUI/BunnyIcon/IconRender/Node3D/BunnyModel" unique_id=613792606]
@@ -1025,7 +1039,7 @@ mesh = ExtResource("18_007wr")
 skin = SubResource("Skin_d650r")
 
 [node name="Inventory" type="Node3D" parent="." unique_id=1895444147]
-script = ExtResource("18_dgqjq")
+script = SubResource("GDScript_sb63p")
 
 [connection signal="stopped" from="CameraPivot/Rifle/RifleBoltFMOD" to="CameraPivot/Rifle" method="_on_rifle_bolt_fmod_stopped"]
 [connection signal="stopped" from="CameraPivot/Rifle/ShootFMOD" to="CameraPivot/Rifle" method="_on_shoot_fmod_stopped"]
