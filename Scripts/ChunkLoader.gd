@@ -66,8 +66,8 @@ func _ready() -> void:
 	update_chunk_visibility()
 
 func _process(_delta: float) -> void:
-	if Engine.is_editor_hint():
-		return
+	#if Engine.is_editor_hint():
+		#return
 
 	if player == null:
 		return

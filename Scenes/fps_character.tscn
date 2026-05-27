@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://d4c6dsvn06202" path="res://Scripts/RotateIcon.gd" id="16_f3sc5"]
 [ext_resource type="Texture2D" uid="uid://bti07pjaewhlv" path="res://Models/Stag_deer.png" id="17_xfjlp"]
 [ext_resource type="ArrayMesh" uid="uid://cdxo6n30x0wp1" path="res://Materials/bunny.res" id="18_007wr"]
+[ext_resource type="PackedScene" uid="uid://dp5gn3p8yciw3" path="res://Scenes/reload_ui.tscn" id="18_dgqjq"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0rwas"]
 radius = 0.484853
@@ -229,21 +230,6 @@ shader_parameter/texture_height = 1080
 shader_parameter/search_radius = 2
 shader_parameter/threshold = 1.0
 shader_parameter/range = 1.0
-
-[sub_resource type="LabelSettings" id="LabelSettings_nc4a0"]
-font = ExtResource("2_3x80j")
-font_size = 61
-outline_size = 10
-outline_color = Color(0, 0, 0, 1)
-shadow_size = 11
-shadow_color = Color(0, 0, 0, 0.427451)
-shadow_offset = Vector2(-1.86, 3.58)
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_sb63p"]
-viewport_path = NodePath("PlayerUI/DeerIcon/IconRender")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_dgqjq"]
-viewport_path = NodePath("PlayerUI/BunnyIcon/IconRender")
 
 [sub_resource type="LabelSettings" id="LabelSettings_sb63p"]
 font = ExtResource("2_3x80j")
@@ -490,6 +476,21 @@ bind/15/name = &"back_foot.R"
 bind/15/bone = -1
 bind/15/pose = Transform3D(0.6601141, 0.720302, 0.21310714, -5.9604638e-08, -0.28370202, 0.9589124, 0.7511653, -0.6329916, -0.1872757, 0.6734441, 0.26873228, -0.19242492)
 
+[sub_resource type="LabelSettings" id="LabelSettings_nc4a0"]
+font = ExtResource("2_3x80j")
+font_size = 61
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 11
+shadow_color = Color(0, 0, 0, 0.427451)
+shadow_offset = Vector2(-1.86, 3.58)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_sb63p"]
+viewport_path = NodePath("PlayerUI/DeerIcon/IconRender")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_dgqjq"]
+viewport_path = NodePath("PlayerUI/BunnyIcon/IconRender")
+
 [sub_resource type="GDScript" id="GDScript_sb63p"]
 script/source = "extends Node3D
 
@@ -605,7 +606,7 @@ transform = Transform3D(9.55342e-16, 2.18557e-08, 0.5, 0.5, -2.18557e-08, 0, 2.1
 target_position = Vector3(0, -3.065, 0)
 collision_mask = 7
 
-[node name="Rifle" type="Node3D" parent="CameraPivot" unique_id=2009489205 node_paths=PackedStringArray("cam", "crosshair", "coll_ray")]
+[node name="Rifle" type="Node3D" parent="CameraPivot" unique_id=2009489205 node_paths=PackedStringArray("cam", "crosshair", "coll_ray", "reload_ui")]
 transform = Transform3D(-2.18557e-08, 0, 0.5, 0, 0.5, 0, -0.5, 0, -2.18557e-08, 0.642172, -0.0352402, -0.882078)
 script = ExtResource("5_sb63p")
 cam = NodePath("..")
@@ -617,6 +618,7 @@ weapon_sway = 1.5
 cam_sway = 5.0
 crosshair = NodePath("../../PlayerUI/Control")
 coll_ray = NodePath("../CollDet")
+reload_ui = NodePath("../../ReloadUI")
 
 [node name="AmmoDisplay" type="Label" parent="CameraPivot/Rifle" unique_id=1420036080]
 anchors_preset = 2
@@ -631,7 +633,6 @@ vertical_alignment = 2
 
 [node name="SubViewport" type="SubViewport" parent="CameraPivot/Rifle" unique_id=703432529]
 use_hdr_2d = true
-scaling_3d_mode = 0
 anisotropic_filtering_level = 0
 
 [node name="CamContainer" type="Node3D" parent="CameraPivot/Rifle/SubViewport" unique_id=1764785907]
@@ -646,6 +647,7 @@ near = 0.001
 
 [node name="Magazine" type="MeshInstance3D" parent="CameraPivot/Rifle" unique_id=1776338479]
 transform = Transform3D(0.123427, 0, 0, -1.16415e-10, 0.0674263, 0, 4.44089e-16, 0, 0.0314976, 0, -0.567574, -0.00585938)
+cast_shadow = 0
 mesh = SubResource("ArrayMesh_0ikym")
 skeleton = NodePath("")
 
@@ -667,6 +669,7 @@ surface_material_override/0 = SubResource("ShaderMaterial_7wmuh")
 
 [node name="Body" type="MeshInstance3D" parent="CameraPivot/Rifle" unique_id=1290092557]
 transform = Transform3D(0.00158487, 0.565718, 0, -0.140567, 0.0063784, 0, 0, 0, 0.140576, 0, 0, 0)
+cast_shadow = 0
 mesh = SubResource("ArrayMesh_v3ea4")
 skeleton = NodePath("")
 surface_material_override/1 = SubResource("ShaderMaterial_2jkuu")
@@ -725,7 +728,6 @@ near = 0.001
 [node name="FmodListener3D" type="FmodListener3D" parent="CameraPivot/Camera3D" unique_id=1041986981]
 
 [node name="MaskViewport" type="SubViewport" parent="CameraPivot" unique_id=403202714]
-scaling_3d_mode = 0
 size = Vector2i(1920, 1080)
 
 [node name="MaskContainer" type="Node3D" parent="CameraPivot/MaskViewport" unique_id=873630219]
@@ -749,6 +751,7 @@ material = SubResource("ShaderMaterial_nh4hu")
 layout_mode = 0
 offset_right = 1921.0
 offset_bottom = 1080.0
+metadata/_edit_use_anchors_ = true
 
 [node name="RemoteTransform3D" type="RemoteTransform3D" parent="CameraPivot" unique_id=354045529]
 remote_path = NodePath("../MaskViewport/MaskContainer")
@@ -788,55 +791,6 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("15_dgqjq")
 
-[node name="Panel" type="Panel" parent="PlayerUI/Control" unique_id=773771139]
-layout_mode = 1
-offset_left = -827.0
-offset_top = -441.0
-offset_right = -130.5
-offset_bottom = -249.0
-
-[node name="DeerCount" type="Label" parent="PlayerUI/Control" unique_id=1781901361]
-layout_mode = 0
-offset_left = -609.5
-offset_top = -362.0
-offset_right = -487.5
-offset_bottom = -251.0
-text = "0"
-label_settings = SubResource("LabelSettings_nc4a0")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="BunnyCount" type="Label" parent="PlayerUI/Control" unique_id=674977104]
-layout_mode = 0
-offset_left = -259.5
-offset_top = -362.0
-offset_right = -137.5
-offset_bottom = -251.0
-text = "0"
-label_settings = SubResource("LabelSettings_nc4a0")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="DeerIcon" type="TextureRect" parent="PlayerUI/Control" unique_id=497223478]
-texture_filter = 1
-layout_mode = 1
-offset_left = -819.5
-offset_top = -437.0
-offset_right = -600.5
-offset_bottom = -239.0
-texture = SubResource("ViewportTexture_sb63p")
-expand_mode = 2
-stretch_mode = 4
-
-[node name="BunnyIcon" type="TextureRect" parent="PlayerUI/Control" unique_id=1669984847]
-texture_filter = 1
-layout_mode = 0
-offset_left = -403.5
-offset_top = -390.0
-offset_right = -239.5
-offset_bottom = -250.0
-texture = SubResource("ViewportTexture_dgqjq")
-
 [node name="PickupLabel" type="Label" parent="PlayerUI/Control" unique_id=637448329]
 visible = false
 texture_filter = 1
@@ -850,12 +804,11 @@ label_settings = SubResource("LabelSettings_sb63p")
 
 [node name="DeerIcon" type="Node3D" parent="PlayerUI" unique_id=1673632127]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.4906, 18.8046, -4.77306)
-visible = false
 
 [node name="IconRender" type="SubViewport" parent="PlayerUI/DeerIcon" unique_id=804707953]
 transparent_bg = true
 scaling_3d_mode = 0
-scaling_3d_scale = 0.3
+scaling_3d_scale = 0.25
 anisotropic_filtering_level = 0
 fsr_sharpness = 0.0
 size = Vector2i(219, 198)
@@ -872,7 +825,7 @@ current = true
 size = 5.486
 
 [node name="DeerModel" type="Node3D" parent="PlayerUI/DeerIcon/IconRender/Node3D" unique_id=978193510]
-transform = Transform3D(-0.8951173, 0, 0.39358065, 0, 1, 0, -0.39358065, 0, -0.8951173, 0.6228008, 0, 0.36164147)
+transform = Transform3D(0.24158996, 0, 0.94311064, 0, 1, 0, -0.94311064, 0, 0.24158996, 0.6228008, 0, 0.36164147)
 script = ExtResource("16_f3sc5")
 
 [node name="Stag" type="MeshInstance3D" parent="PlayerUI/DeerIcon/IconRender/Node3D/DeerModel" unique_id=1163783577]
@@ -895,7 +848,7 @@ visible = false
 [node name="IconRender" type="SubViewport" parent="PlayerUI/BunnyIcon" unique_id=451460791]
 transparent_bg = true
 scaling_3d_mode = 0
-scaling_3d_scale = 0.3
+scaling_3d_scale = 0.25
 anisotropic_filtering_level = 0
 fsr_sharpness = 0.0
 size = Vector2i(164, 128)
@@ -912,7 +865,7 @@ current = true
 size = 10.406
 
 [node name="BunnyModel" type="Node3D" parent="PlayerUI/BunnyIcon/IconRender/Node3D" unique_id=1163097200]
-transform = Transform3D(3.0005605, 0, -3.0630538, 0, 4.535, 0, 3.0630538, 0, 3.0005605, 0, 0.884464, -2.558463)
+transform = Transform3D(-2.522831, 0, -3.443916, 0, 4.535, 0, 3.443916, 0, -2.522831, 0, 0.884464, -2.558463)
 script = ExtResource("16_f3sc5")
 
 [node name="Rabbit" type="Node3D" parent="PlayerUI/BunnyIcon/IconRender/Node3D/BunnyModel" unique_id=613792606]
@@ -1038,8 +991,64 @@ layers = 262144
 mesh = ExtResource("18_007wr")
 skin = SubResource("Skin_d650r")
 
+[node name="Control2" type="Control" parent="PlayerUI" unique_id=1708890930]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Panel" type="Panel" parent="PlayerUI/Control2" unique_id=773771139]
+layout_mode = 1
+offset_right = 696.5
+offset_bottom = 192.0
+
+[node name="DeerCount" type="Label" parent="PlayerUI/Control2" unique_id=1781901361]
+layout_mode = 0
+offset_left = 218.0
+offset_top = 79.0
+offset_right = 340.0
+offset_bottom = 190.0
+text = "0"
+label_settings = SubResource("LabelSettings_nc4a0")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BunnyCount" type="Label" parent="PlayerUI/Control2" unique_id=674977104]
+layout_mode = 0
+offset_left = 568.0
+offset_top = 79.0
+offset_right = 690.0
+offset_bottom = 190.0
+text = "0"
+label_settings = SubResource("LabelSettings_nc4a0")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DeerIcon2" type="TextureRect" parent="PlayerUI/Control2" unique_id=497223478]
+texture_filter = 1
+layout_mode = 0
+offset_left = 8.0
+offset_top = 4.0
+offset_right = 227.0
+offset_bottom = 202.0
+texture = SubResource("ViewportTexture_sb63p")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="BunnyIcon2" type="TextureRect" parent="PlayerUI/Control2" unique_id=1669984847]
+texture_filter = 1
+layout_mode = 0
+offset_left = 424.0
+offset_top = 51.0
+offset_right = 588.0
+offset_bottom = 191.0
+texture = SubResource("ViewportTexture_dgqjq")
+
 [node name="Inventory" type="Node3D" parent="." unique_id=1895444147]
 script = SubResource("GDScript_sb63p")
+
+[node name="ReloadUI" parent="." unique_id=1714583255 instance=ExtResource("18_dgqjq")]
+visible = false
 
 [connection signal="stopped" from="CameraPivot/Rifle/RifleBoltFMOD" to="CameraPivot/Rifle" method="_on_rifle_bolt_fmod_stopped"]
 [connection signal="stopped" from="CameraPivot/Rifle/ShootFMOD" to="CameraPivot/Rifle" method="_on_shoot_fmod_stopped"]

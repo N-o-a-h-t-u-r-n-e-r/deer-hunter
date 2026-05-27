@@ -17,6 +17,8 @@ extends Node3D
 @export var coll_ray : RayCast3D
 @export var recoil : float = 1.5
 @export var rate_of_fire: float = 3.0
+@export var reload_ui:Control
+
 var aim_pos
 var hip_pos
 var rot
@@ -65,7 +67,7 @@ func _process(delta: float) -> void:
 	#set a variable that always increases for the sin function
 	sway += delta
 	
-	if(reloading or bolting):
+	if(bolting):
 		cooldown -= delta	
 		
 	if(reloading):
@@ -83,17 +85,14 @@ func _process(delta: float) -> void:
 		bullet.rotation = bullet.rotation.move_toward(bullet_rot + -(Vector3(10.0, 10.0, 10.0)), delta * 20.0)
 		
 	if(cooldown <= 0.0):
-		if(reloading == true):
-			total_ammo -= magazine_size - curr_ammo
-			curr_ammo = magazine_size
 			
 		bullet.position = bullet_pos
 		bullet.rotation = bullet_rot
 		cooldown = rate_of_fire
-		reloading = false
 		bolting = false
 		sway = 0
 		update_GUI()
+
 	
 	var offset_hip_pos = hip_pos + Vector3(sin(sway - 0.5) * (hip_sway_speed), sin(sway) * hip_sway_speed, 0.0)
 	
@@ -134,9 +133,13 @@ func _process(delta: float) -> void:
 				else:
 					shoot()
 					
-		elif(Input.is_action_just_pressed("reload") and !bolting and !reloading and curr_ammo != 6):
-			reloading = true
-			$ReloadFMOD.play_one_shot()
+		elif(Input.is_action_just_pressed("reload") and !bolting and curr_ammo != 6):
+			if not reloading:
+				reloading = true
+				reload_ui.visible = true
+			else:
+				reloading = false
+				reload_ui.visible = false
 			
 		
 		else:
@@ -191,6 +194,7 @@ func rifle_sway(offset_rotation, delta):
 	
 func update_GUI():
 	$AmmoDisplay.text = (str(curr_ammo) + " / " + str(total_ammo))
+	reload_ui.visible = false
 	
 func _on_rifle_bolt_fmod_stopped() -> void:
 	BoltSoundPlaying = false

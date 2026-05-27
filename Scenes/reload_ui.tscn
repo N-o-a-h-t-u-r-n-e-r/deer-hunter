@@ -1,13 +1,27 @@
 [gd_scene format=3 uid="uid://dp5gn3p8yciw3"]
 
-[ext_resource type="Texture2D" uid="uid://d3up617u0w0ok" path="res://Textures/2D_Mag.png" id="1_1ccok"]
-[ext_resource type="Script" uid="uid://dguxfacb5118x" path="res://Scripts/bullet.gd" id="1_1y3v6"]
+[ext_resource type="Texture2D" uid="uid://d3d0n3w66nnn8" path="res://Textures/rifle_mag_lowres.png" id="2_1y3v6"]
 [ext_resource type="Texture2D" uid="uid://cdrhwiwbsedxi" path="res://Textures/2d_bullet.png" id="2_rkr5v"]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mqul3"]
+[ext_resource type="Script" uid="uid://d28sqprkjoq14" path="res://Scripts/reload_mag.gd" id="3_mqul3"]
+[ext_resource type="Texture2D" uid="uid://7swojdj4iy65" path="res://Textures/ammo_closed_lowres.png" id="4_1y3v6"]
+[ext_resource type="FontFile" uid="uid://03sgifrxayrd" path="res://PressStart2P-Regular.ttf" id="4_ic4l7"]
+[ext_resource type="Script" uid="uid://os3g5qfpyw0v" path="res://Scripts/ammo_box.gd" id="5_ic4l7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mqul3"]
 size = Vector2(95.886536, 14.468086)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_mqul3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_46j68"]
+size = Vector2(744, 309)
+
+[sub_resource type="LabelSettings" id="LabelSettings_1eey4"]
+font = ExtResource("4_ic4l7")
+font_size = 32
+font_color = Color(1, 0, 0.019607844, 1)
+shadow_size = 30
+shadow_color = Color(0, 0, 0, 0.34901962)
+shadow_offset = Vector2(-8.675, 5.58)
 
 [sub_resource type="GDScript" id="GDScript_mqul3"]
 script/source = "extends RigidBody2D
@@ -29,132 +43,94 @@ func _on_body_entered(body: Node) -> void:
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_mqul3"]
 
-[sub_resource type="GDScript" id="GDScript_1y3v6"]
-script/source = "extends Area2D
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-"
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1y3v6"]
 size = Vector2(36.161545, 10)
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_mqul3"]
+[node name="Control" type="Control" unique_id=2079175522]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+mouse_behavior_recursive = 1
 
-[node name="ReloadUI" type="Node2D" unique_id=1714583255]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1742404262]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = 960.0
+offset_bottom = 540.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.31431636, 0.31431606, 0.31431586, 0.6901961)
 
-[node name="Bullet" type="RigidBody2D" parent="." unique_id=1275044601 groups=["Bullet"]]
-position = Vector2(398, 488)
-input_pickable = true
-mass = 0.1
-physics_material_override = SubResource("PhysicsMaterial_mqul3")
-gravity_scale = 3.0
-can_sleep = false
-contact_monitor = true
-max_contacts_reported = 8
-script = ExtResource("1_1y3v6")
+[node name="ReloadUI" type="Node2D" parent="." unique_id=1714583255]
+position = Vector2(-939, -519)
 
-[node name="BulletTexture" type="Sprite2D" parent="Bullet" unique_id=1459101501]
-position = Vector2(3, 16)
-scale = Vector2(3.5, 3.4999998)
-texture = ExtResource("2_rkr5v")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bullet" unique_id=1974102768]
-scale = Vector2(3.5, 3.4999998)
-shape = SubResource("RectangleShape2D_mqul3")
-
-[node name="MagInside" type="RigidBody2D" parent="." unique_id=1096002203]
-position = Vector2(908, 650)
+[node name="MagInside" type="RigidBody2D" parent="ReloadUI" unique_id=1096002203]
+position = Vector2(1604, 664)
 mass = 0.1
 lock_rotation = true
 
-[node name="BulletTexture" type="Sprite2D" parent="MagInside" unique_id=2040372407]
+[node name="BulletTexture" type="Sprite2D" parent="ReloadUI/MagInside" unique_id=2040372407]
 position = Vector2(3, 16)
 scale = Vector2(3.5, 3.4999998)
 skew = -0.17453292
 texture = ExtResource("2_rkr5v")
+flip_h = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MagInside" unique_id=799109475]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ReloadUI/MagInside" unique_id=799109475]
 scale = Vector2(3.5, 3.4999998)
 shape = SubResource("RectangleShape2D_mqul3")
 
-[node name="Magazine" type="RigidBody2D" parent="." unique_id=87510660]
-position = Vector2(916, 805)
-lock_rotation = true
-freeze = true
-max_contacts_reported = 8
-script = SubResource("GDScript_mqul3")
-
-[node name="MagazineTexture" type="Sprite2D" parent="Magazine" unique_id=1551923695]
-texture_filter = 1
-scale = Vector2(0.45, 0.45)
-texture = ExtResource("1_1ccok")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Magazine" unique_id=264795121]
-position = Vector2(178, -165)
-scale = Vector2(8.975, 32.245)
-shape = SubResource("SegmentShape2D_mqul3")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Magazine" unique_id=1378710388]
-position = Vector2(-193, -159)
-scale = Vector2(8.975, 32.245)
-shape = SubResource("SegmentShape2D_mqul3")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="Magazine" unique_id=1557035831]
-position = Vector2(154.00012, 159.00003)
-rotation = 1.5707964
-scale = Vector2(8.975, 32.245)
-shape = SubResource("SegmentShape2D_mqul3")
-
-[node name="Area2D" type="Area2D" parent="Magazine" unique_id=983807302]
-input_pickable = false
-script = SubResource("GDScript_1y3v6")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Magazine/Area2D" unique_id=1585074757]
-position = Vector2(-8, -43)
-scale = Vector2(6.995, 6.995)
-shape = SubResource("RectangleShape2D_1y3v6")
-
-[node name="Left Wall" type="StaticBody2D" parent="." unique_id=601260630]
+[node name="Left Wall" type="StaticBody2D" parent="ReloadUI" unique_id=601260630]
 position = Vector2(6, 475)
 rotation = 1.5707964
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Left Wall" unique_id=2034225361]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ReloadUI/Left Wall" unique_id=2034225361]
 scale = Vector2(7.555, 8.58)
 shape = SubResource("WorldBoundaryShape2D_mqul3")
 
-[node name="Right Wall" type="StaticBody2D" parent="." unique_id=729201217]
+[node name="Right Wall" type="StaticBody2D" parent="ReloadUI" unique_id=729201217]
 position = Vector2(1932, 475)
 rotation = -1.5707964
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Right Wall" unique_id=290060438]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ReloadUI/Right Wall" unique_id=290060438]
 scale = Vector2(7.555, 8.58)
 shape = SubResource("WorldBoundaryShape2D_mqul3")
 
-[node name="Floor" type="StaticBody2D" parent="." unique_id=827145533]
+[node name="Floor" type="StaticBody2D" parent="ReloadUI" unique_id=827145533]
 position = Vector2(886, 1087)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=1973424720]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ReloadUI/Floor" unique_id=1973424720]
 scale = Vector2(11.685, 11.685)
 shape = SubResource("WorldBoundaryShape2D_mqul3")
 
-[node name="Ceiling" type="StaticBody2D" parent="." unique_id=137876962]
+[node name="Ceiling" type="StaticBody2D" parent="ReloadUI" unique_id=137876962]
 position = Vector2(886, -14)
 rotation = 3.1415927
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ceiling" unique_id=1206693547]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ReloadUI/Ceiling" unique_id=1206693547]
 scale = Vector2(11.685, 11.685)
 shape = SubResource("WorldBoundaryShape2D_mqul3")
 
-[node name="DampedSpringJoint2D" type="DampedSpringJoint2D" parent="." unique_id=347147004]
-position = Vector2(907, 652)
+[node name="DampedSpringJoint2D" type="DampedSpringJoint2D" parent="ReloadUI" unique_id=347147004]
+position = Vector2(1603, 666)
 node_a = NodePath("../Magazine")
 node_b = NodePath("../MagInside")
 bias = 0.9
@@ -162,14 +138,84 @@ length = 275.0
 rest_length = 250.0
 stiffness = 64.0
 
-[node name="GrooveJoint2D" type="GrooveJoint2D" parent="." unique_id=79655158]
-position = Vector2(907, 652)
+[node name="GrooveJoint2D" type="GrooveJoint2D" parent="ReloadUI" unique_id=79655158]
+position = Vector2(1603, 666)
 node_a = NodePath("../Magazine")
 node_b = NodePath("../MagInside")
 bias = 0.9
 length = 130.0
 initial_offset = 1.0
 
-[connection signal="input_event" from="Bullet" to="Bullet" method="_on_input_event"]
-[connection signal="body_entered" from="Magazine" to="Bullet" method="_on_magazine_body_entered"]
-[connection signal="body_entered" from="Magazine/Area2D" to="Bullet" method="_on_area_2d_body_entered"]
+[node name="AmmoBox" type="StaticBody2D" parent="ReloadUI" unique_id=781861691]
+position = Vector2(457, 863)
+collision_layer = 4
+collision_mask = 4
+input_pickable = true
+script = ExtResource("5_ic4l7")
+
+[node name="Bullet" type="Sprite2D" parent="ReloadUI/AmmoBox" unique_id=1339015863]
+visible = false
+position = Vector2(432, 131)
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("2_rkr5v")
+
+[node name="AmmoBoxTexture" type="Sprite2D" parent="ReloadUI/AmmoBox" unique_id=1687982033]
+scale = Vector2(5.341, 4.934)
+texture = ExtResource("4_1y3v6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ReloadUI/AmmoBox" unique_id=379144748]
+position = Vector2(-47, -2.5)
+shape = SubResource("RectangleShape2D_46j68")
+
+[node name="AmmoCount" type="Label" parent="ReloadUI/AmmoBox" unique_id=1054394535]
+offset_left = -214.0
+offset_top = -267.0
+offset_right = 136.0
+offset_bottom = -217.0
+text = "(Empty)"
+label_settings = SubResource("LabelSettings_1eey4")
+horizontal_alignment = 1
+
+[node name="Magazine" type="RigidBody2D" parent="ReloadUI" unique_id=87510660]
+position = Vector2(1612, 819)
+lock_rotation = true
+freeze = true
+max_contacts_reported = 8
+script = SubResource("GDScript_mqul3")
+
+[node name="MagazineTexture" type="Sprite2D" parent="ReloadUI/Magazine" unique_id=1551923695]
+texture_filter = 1
+position = Vector2(-8, 44)
+scale = Vector2(6.23, 6.23)
+texture = ExtResource("2_1y3v6")
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ReloadUI/Magazine" unique_id=264795121]
+position = Vector2(178, -165)
+scale = Vector2(9, 38.600002)
+shape = SubResource("SegmentShape2D_mqul3")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="ReloadUI/Magazine" unique_id=1378710388]
+position = Vector2(-193, -159)
+scale = Vector2(9, 37.8)
+shape = SubResource("SegmentShape2D_mqul3")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="ReloadUI/Magazine" unique_id=1557035831]
+position = Vector2(154, 229.00003)
+rotation = 1.5707964
+scale = Vector2(8.975, 32.245)
+shape = SubResource("SegmentShape2D_mqul3")
+
+[node name="Area2D" type="Area2D" parent="ReloadUI/Magazine" unique_id=983807302]
+input_pickable = false
+script = ExtResource("3_mqul3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ReloadUI/Magazine/Area2D" unique_id=1585074757]
+position = Vector2(-8, -43)
+scale = Vector2(6.995, 6.995)
+shape = SubResource("RectangleShape2D_1y3v6")
+
+[connection signal="input_event" from="ReloadUI/AmmoBox" to="ReloadUI/AmmoBox" method="_on_input_event"]
+[connection signal="mouse_entered" from="ReloadUI/AmmoBox" to="ReloadUI/AmmoBox" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="ReloadUI/AmmoBox" to="ReloadUI/AmmoBox" method="_on_mouse_exited"]
+[connection signal="body_entered" from="ReloadUI/Magazine/Area2D" to="ReloadUI/Magazine/Area2D" method="_on_body_entered"]
