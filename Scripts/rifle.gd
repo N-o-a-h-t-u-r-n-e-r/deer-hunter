@@ -1,8 +1,7 @@
 extends Node3D
 
 
-@export var magazine_size : int = 6
-@export var total_ammo : int = 48
+
 @export var cam : Node3D
 @export var x_offset : float = 0.35
 @export var y_offset : float= 0.4
@@ -18,6 +17,7 @@ extends Node3D
 @export var recoil : float = 1.5
 @export var rate_of_fire: float = 3.0
 @export var reload_ui:Control
+@export var inventory:Node3D
 
 var aim_pos
 var hip_pos
@@ -34,13 +34,16 @@ var bullet
 var bullet_pos
 var bullet_rot
 var mouse_delta := Vector2.ZERO
-var curr_ammo : int
+
 
 var BoltSoundPlaying : bool = false
 var ShootSoundPlaying : bool = false
 
 var PlayZoom : bool = true
 #var PlayToChest : bool = true
+
+signal bolted
+
 
 
 func _unhandled_input(event):
@@ -58,9 +61,9 @@ func _ready() -> void:
 	bullet = $Bullet as MeshInstance3D
 	bullet_pos = bullet.position
 	bullet_rot = bullet.rotation
-	curr_ammo = magazine_size
+
 	
-	update_GUI()
+
 
 func _process(delta: float) -> void:
 	
@@ -91,7 +94,7 @@ func _process(delta: float) -> void:
 		cooldown = rate_of_fire
 		bolting = false
 		sway = 0
-		update_GUI()
+		bolted.emit()
 
 	
 	var offset_hip_pos = hip_pos + Vector3(sin(sway - 0.5) * (hip_sway_speed), sin(sway) * hip_sway_speed, 0.0)
@@ -128,12 +131,12 @@ func _process(delta: float) -> void:
 				#Little check to make sure rifle cant shoot many times in a row
 				if(bolting):
 					print('bolting')
-				elif(curr_ammo == 0):
+				elif(inventory.inventory["current_ammo"] == 0):
 					print('Mag empty')
 				else:
 					shoot()
 					
-		elif(Input.is_action_just_pressed("reload") and !bolting and curr_ammo != 6):
+		elif(Input.is_action_just_pressed("reload") and !bolting and inventory.inventory["current_ammo"] != 6):
 			if not reloading:
 				reloading = true
 				reload_ui.visible = true
@@ -177,7 +180,7 @@ func shoot():
 			$HitMarkerFMOD.play_one_shot()
 			collider.die()
 		
-	curr_ammo -= 1
+
 	if(!ShootSoundPlaying):
 		$ShootFMOD.play()
 	bolting = true
@@ -187,14 +190,11 @@ func rifle_sway(offset_rotation, delta):
 	rotation.y = lerp_angle(rotation.y, rot.y + offset_rotation.y * weapon_sway, weapon_sway_speed * delta)
 	rotation.z = lerp_angle(rotation.z, rot.x + -offset_rotation.x * weapon_sway, weapon_sway_speed * delta)
 
-
 	ads_cam.rotation.y = lerp_angle(ads_cam.rotation.y, -offset_rotation.y * cam_sway + cam_offset, weapon_sway_speed * delta)
 	ads_cam.rotation.x = lerp_angle(ads_cam.rotation.x, -offset_rotation.x * cam_sway + ads_cam_rot.x , weapon_sway_speed * delta)
 	
 	
-func update_GUI():
-	$AmmoDisplay.text = (str(curr_ammo) + " / " + str(total_ammo))
-	reload_ui.visible = false
+
 	
 func _on_rifle_bolt_fmod_stopped() -> void:
 	BoltSoundPlaying = false

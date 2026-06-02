@@ -63,6 +63,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 mouse_behavior_recursive = 1
+script = ExtResource("3_mqul3")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1742404262]
 layout_mode = 1
@@ -208,7 +209,6 @@ shape = SubResource("SegmentShape2D_mqul3")
 
 [node name="Area2D" type="Area2D" parent="ReloadUI/Magazine" unique_id=983807302]
 input_pickable = false
-script = ExtResource("3_mqul3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ReloadUI/Magazine/Area2D" unique_id=1585074757]
 position = Vector2(-8, -43)
@@ -218,4 +218,4 @@ shape = SubResource("RectangleShape2D_1y3v6")
 [connection signal="input_event" from="ReloadUI/AmmoBox" to="ReloadUI/AmmoBox" method="_on_input_event"]
 [connection signal="mouse_entered" from="ReloadUI/AmmoBox" to="ReloadUI/AmmoBox" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="ReloadUI/AmmoBox" to="ReloadUI/AmmoBox" method="_on_mouse_exited"]
-[connection signal="body_entered" from="ReloadUI/Magazine/Area2D" to="ReloadUI/Magazine/Area2D" method="_on_body_entered"]
+[connection signal="body_entered" from="ReloadUI/Magazine/Area2D" to="." method="_on_area_2d_body_entered"]

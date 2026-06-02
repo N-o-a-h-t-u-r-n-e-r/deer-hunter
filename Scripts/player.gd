@@ -23,7 +23,9 @@ var vertical_rotation = 0.0
 @onready var object_detection:RayCast3D = $CameraPivot/ObjectDetection
 @onready var outline_node:Control = $CameraPivot/Outline
 @onready var pickup_label:Label = $PlayerUI/Control/PickupLabel
-@onready var inventory:Dictionary = $Inventory.inventory
+@onready var inventory:Node3D = $Inventory
+@onready var reload_ui:Control = $ReloadUI
+
 var bob_timer = 0.0
 var step_timer = 0.0
 var curr_speed = speed
@@ -33,6 +35,9 @@ var Breathing = false
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	reload_ui.reload.connect(reload_bullet)
+	update_GUI()
+	$CameraPivot/Rifle.bolted.connect(bolt_rifle)
 
 func _process(delta: float) -> void:
 	progress_bar.value -= 20 * delta
@@ -54,10 +59,10 @@ func _process(delta: float) -> void:
 			pickup_label.visible = true
 
 			if Input.is_action_just_pressed("action"):
-				if not inventory.has(curr_obj.animal_name):
-					inventory[curr_obj.animal_name] = 0
+				if not inventory.inventory.has(curr_obj.animal_name):
+					inventory.inventory[curr_obj.animal_name] = 0
 
-				inventory[curr_obj.animal_name] += 1
+				inventory.inventory[curr_obj.animal_name] += 1
 				curr_obj.queue_free()
 				outline_node.visible = false
 				pickup_label.visible = false
@@ -146,4 +151,13 @@ func _unhandled_input(event: InputEvent) -> void:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		
 		
+func reload_bullet():
+	inventory.reload_bullet()
+	update_GUI()
 	
+func bolt_rifle():
+	inventory.shoot_bullet()
+	update_GUI()
+	
+func update_GUI():
+	$PlayerUI/Control/AmmoDisplay.text = (str(inventory.inventory["current_ammo"]) + " / " + str(inventory.inventory["total_ammo"]))
